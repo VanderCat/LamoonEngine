@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Silk.NET.OpenGL" Version="2.20.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.2" />
+      <PackageReference Include="SkiaSharp" Version="2.88.7" />
+      <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Shaders\base.frag" />
+      <EmbeddedResource Include="Shaders\base.frag" />
+      <None Remove="Shaders\base.vert" />
+      <EmbeddedResource Include="Shaders\base.vert" />
+    </ItemGroup>
+
+</Project>

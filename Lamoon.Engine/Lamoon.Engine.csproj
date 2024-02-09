@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="3.1.2-dev-02097" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+      <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00972" />
+      <PackageReference Include="Silk.NET.OpenGL" Version="2.20.0" />
+      <PackageReference Include="Silk.NET.Windowing.Sdl" Version="2.20.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Lamoon.Graphics\Lamoon.Graphics.csproj" />
+    </ItemGroup>
+
+</Project>
