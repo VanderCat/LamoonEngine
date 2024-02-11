@@ -7,9 +7,18 @@ public class Mesh {
     public uint EboHandle;
     public uint VaoHandle;
 
-    public float[] vertices;
+    public float[] Vertices;
+    public uint[] Indices;
+    
+    public PrimitiveType PrimitiveType { get; private set; }
 
-    public Mesh(float[] vertices, uint[] indices) {
+    public Mesh(
+        float[] vertices, 
+        uint[] indices,
+        PrimitiveType type = PrimitiveType.Triangles
+        ) {
+        Vertices = vertices;
+        Indices = indices;
         var gl = GraphicsReferences.OpenGl;
         
         VaoHandle = gl.GenVertexArray();
@@ -52,15 +61,5 @@ public class Mesh {
             gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
             gl.BindBuffer(BufferTargetARB.ElementArrayBuffer, 0);
         }
-    }
-
-    public unsafe void Draw(Texture tex) {
-        var gl = GraphicsReferences.OpenGl;
-        gl.Clear(ClearBufferMask.ColorBufferBit);
-        gl.BindVertexArray(VaoHandle);
-        gl.UseProgram(Shader.Default.OpenGlHandle);
-        gl.ActiveTexture(TextureUnit.Texture0);
-        gl.BindTexture(TextureTarget.Texture2D, tex.OpenGlHandle);
-        gl.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, (void*) 0);
     }
 }

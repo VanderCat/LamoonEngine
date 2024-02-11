@@ -1,10 +1,14 @@
-﻿using Serilog;
+﻿using System.Runtime.InteropServices;
+using Lamoon.Engine.Dev;
+using Serilog;
 using Serilog.Events;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 using Silk.NET.Windowing.Sdl;
 using Lamoon.Graphics;
+using NekoLib.Scenes;
+using Silk.NET.SDL;
 
 namespace Lamoon.Engine;
 
@@ -17,10 +21,8 @@ public class Game {
             return _instance;
         }
     }
-    
-    private Graphics.Texture _tex;
-    private Graphics.Shader _shader;
-    private Graphics.Mesh _mesh;
+
+    private ILogger _openGlLogger;
     
     protected Game() {
     }
@@ -42,6 +44,7 @@ public class Game {
     
     public void InitializeWindow() {
         Window = Silk.NET.Windowing.Window.Create(WindowOptions.Default);
+        SdlWindowing.GetExistingApi(Window).GLSetAttribute(GLattr.ContextFlags, (int)GLcontextFlag.DebugFlag);
     }
 
     public void BindCallbacks(IView view) {
@@ -61,24 +64,31 @@ public class Game {
     }
     
     public void Draw(double deltaTime) {
-        var gl = GraphicsReferences.OpenGl;
-        _mesh.Draw(_tex);
+        SceneManager.Draw();
     }
 
     public void Load() {
-        GraphicsReferences.OpenGl = View.CreateOpenGL();
-        _tex = Graphics.Texture.FromFile("test.png");
-        _shader = Graphics.Shader.Default;
-        _mesh = new Mesh(new[] {
-                0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-                0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-                -0.5f, 0.5f, 0.0f, 0.0f, 1.0f
-            },
-            new[] {
-                0u, 1u, 3u,
-                1u, 2u, 3u
-            });
+        var gl = View.CreateOpenGL();
+        GraphicsReferences.OpenGl = gl;
+        #if DEBUG
+        _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
+        unsafe {
+            gl.DebugMessageCallback(
+                (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {
+                    var logLevel = ((DebugSeverity)severity) switch {
+                        DebugSeverity.DontCare => LogEventLevel.Verbose,
+                        DebugSeverity.DebugSeverityNotification => LogEventLevel.Debug,
+                        DebugSeverity.DebugSeverityHigh => LogEventLevel.Error,
+                        DebugSeverity.DebugSeverityMedium => LogEventLevel.Warning,
+                        DebugSeverity.DebugSeverityLow => LogEventLevel.Information,
+                        _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
+                    };
+                    _openGlLogger.Write(logLevel, "{type}/{id}: "+Marshal.PtrToStringAnsi(message), type.ToString().Substring(9), id);
+                },
+                null);
+        }
+        #endif
+        SceneManager.LoadScene(new TestScene());
     }
     
     public void Closing() {
@@ -87,6 +97,7 @@ public class Game {
 
     public void Update(double deltaTime) {
         Time.Delta = deltaTime;
+        SceneManager.Update();
     }
 
     public void FrameBufferResize(Vector2D<int> newSize) {

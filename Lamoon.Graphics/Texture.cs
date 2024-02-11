@@ -7,32 +7,90 @@ using Size = System.Drawing.Size;
 
 namespace Lamoon.Graphics; 
 
-public class Texture {
+public class Texture : IDisposable {
+    
+    static internal uint _lastBoundTexture = 0;
+
+    static public void Bind(uint handle, TextureTarget target) {
+        if (_lastBoundTexture == handle) return;
+        _lastBoundTexture = handle;
+        GraphicsReferences.OpenGl.BindTexture(target, handle);
+    }
+
+    static public void Bind(Texture texture) {
+        Bind(texture.OpenGlHandle, texture.Type);
+    }
+
+    static public void Unbind(TextureTarget target) {
+        Bind(0, target);
+    }
     
     public uint OpenGlHandle;
 
+    private TextureWrapMode _wrapModeX;
     public TextureWrapMode WrapModeX {
-        set => GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureWrapS, (int) value);
-    }
-    public TextureWrapMode WrapModeY {
-        set => GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureWrapT, (int) value);
-    }
-    
-    public TextureMinFilter MinFilter {
-        set => GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureMinFilter, (int) value);
-    }
-    public TextureMagFilter MagFilter {
-        set => GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureMagFilter, (int) value);
+        set {
+            Bind(this);
+            GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureWrapS, (int)value);
+            _wrapModeX = value;
+            Unbind(Type);
+        }
+        get => _wrapModeX;
     }
 
-    public Texture(Size size, byte[] data) {
+    private TextureWrapMode _wrapModeY;
+    public TextureWrapMode WrapModeY {
+        set {
+            Bind(this);
+            GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureWrapT, (int)value);
+            _wrapModeY = value;
+            Unbind(Type);
+        }
+        get => _wrapModeY;
+    }
+
+    private TextureMinFilter _minFilter;
+    public TextureMinFilter MinFilter {
+        set {
+            Bind(this);
+            GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureMinFilter, (int)value);
+            _minFilter = value;
+            Unbind(Type);
+        }
+        get => _minFilter;
+    }
+
+    private TextureMagFilter _magFilter;
+    public TextureMagFilter MagFilter {
+        set {
+            Bind(this);
+            GraphicsReferences.OpenGl.TextureParameter(OpenGlHandle, TextureParameterName.TextureMagFilter, (int)value);
+            _magFilter = value;
+            Unbind(Type);
+        }
+        get => _magFilter;
+    }
+    
+    public TextureTarget Type { get; }
+    public InternalFormat Format { get; }
+
+
+    public Texture(
+        Size size, 
+        byte[] data, 
+        InternalFormat internalFormat = InternalFormat.Rgba8, 
+        PixelFormat dataFormat = PixelFormat.Rgba,
+        TextureTarget type = TextureTarget.Texture2D
+        ) {
         var gl = GraphicsReferences.OpenGl;
         OpenGlHandle = gl.GenTexture();
-        gl.BindTexture(TextureTarget.Texture2D, OpenGlHandle);
+        Type = type;
+        Format = internalFormat;
+        Bind(this);
         unsafe {
             fixed (byte* ptr = data) {
-                gl.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat.Rgba8, (uint)size.Width,
-                    (uint)size.Height, 0, PixelFormat.Rgba, PixelType.Byte, ptr);
+                gl.TexImage2D(Type, 0, internalFormat, (uint)size.Width,
+                    (uint)size.Height, 0, dataFormat, PixelType.UnsignedByte, ptr);
             }
         }
 
@@ -42,15 +100,22 @@ public class Texture {
         MinFilter = TextureMinFilter.LinearMipmapLinear;
         MagFilter = TextureMagFilter.Linear;
         
-        gl.GenerateMipmap(TextureTarget.Texture2D);
-        gl.BindTexture(TextureTarget.Texture2D, 0);
+        Bind(this);
+        gl.GenerateMipmap(Type);
+        Unbind(Type);
     }
 
     public static Texture FromFile(string path) {
-        using var img = Image.Load<Rgba32>(path);
-        byte[] pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Rgba32>()];
+        using var img = Image.Load<Bgra32>(path);
+        byte[] pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
         img.CopyPixelDataTo(pixelBytes);
+        Console.WriteLine($"{pixelBytes[0]:x2} {pixelBytes[1]:x2} {pixelBytes[2]:x2} {pixelBytes[3]:x2}");
+        return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes, dataFormat:PixelFormat.Bgra);
+    }
 
-        return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes);
+    public void Dispose() {
+        GraphicsReferences.OpenGl.DeleteTexture(OpenGlHandle);
+        if (OpenGlHandle == _lastBoundTexture)
+            _lastBoundTexture = 0;
     }
 }

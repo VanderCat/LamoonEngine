@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Graphics", "Lamoon.G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.TestGame", "Lamoon.TestGame\Lamoon.TestGame.csproj", "{FCE1491B-0469-44F1-B019-F18D4819C895}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoLib", "..\NekoLib\NekoLib\NekoLib.csproj", "{43A240D9-DF90-4006-9EF1-7B302F09BB43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FCE1491B-0469-44F1-B019-F18D4819C895}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE1491B-0469-44F1-B019-F18D4819C895}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE1491B-0469-44F1-B019-F18D4819C895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43A240D9-DF90-4006-9EF1-7B302F09BB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43A240D9-DF90-4006-9EF1-7B302F09BB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43A240D9-DF90-4006-9EF1-7B302F09BB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43A240D9-DF90-4006-9EF1-7B302F09BB43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
