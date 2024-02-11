@@ -19,6 +19,7 @@ public class Mesh {
         ) {
         Vertices = vertices;
         Indices = indices;
+        PrimitiveType = type;
         var gl = GraphicsReferences.OpenGl;
         
         VaoHandle = gl.GenVertexArray();

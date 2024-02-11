@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using Silk.NET.OpenGL;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using SkiaSharp;
+using SixLabors.ImageSharp.Processing;
 using Size = System.Drawing.Size;
 
 namespace Lamoon.Graphics; 
@@ -107,9 +107,10 @@ public class Texture : IDisposable {
 
     public static Texture FromFile(string path) {
         using var img = Image.Load<Bgra32>(path);
-        byte[] pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
+        img.Mutate(x => x.Flip(FlipMode.Vertical));
+        var pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
         img.CopyPixelDataTo(pixelBytes);
-        Console.WriteLine($"{pixelBytes[0]:x2} {pixelBytes[1]:x2} {pixelBytes[2]:x2} {pixelBytes[3]:x2}");
+
         return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes, dataFormat:PixelFormat.Bgra);
     }
 

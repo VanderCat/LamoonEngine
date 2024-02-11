@@ -30,15 +30,13 @@ public class TestComponent : Behaviour {
         Log.Information("Test");
     }
 
-    void Draw() {
+    unsafe void Draw() {
         var gl = GraphicsReferences.OpenGl;
-        
         Immedieate.Clear(ClearBufferMask.ColorBufferBit);
-        
         gl.BindVertexArray(_mesh.VaoHandle);
         Immedieate.UseShader(_shader??Shader.Default);
         if (_tex is not null) Immedieate.BindTexture(_tex);
-        gl.PolygonMode( GLEnum.FrontAndBack, GLEnum.Line );
-        gl.DrawElements(_mesh.PrimitiveType, (uint)_mesh.Indices.Length, DrawElementsType.UnsignedInt,  0 );
+        
+        gl.DrawElements(_mesh.PrimitiveType, (uint)_mesh.Indices.Length, DrawElementsType.UnsignedInt, (void*) 0);
     }
 }
