@@ -15,7 +15,7 @@ public class UnlinkedShader : IDisposable {
         
         
         if (!CheckShader())
-            throw new Exception("Vertex shader failed to compile: " + gl.GetShaderInfoLog(OpenGlHandle));
+            throw new Exception("Shader failed to compile: " + gl.GetShaderInfoLog(OpenGlHandle));
 
     }
 

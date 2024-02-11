@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Reflection;
 using Silk.NET.OpenGL;
 
@@ -49,5 +50,25 @@ public class Shader {
     public bool CheckShader() {
         GraphicsReferences.OpenGl.GetProgram(OpenGlHandle, ProgramPropertyARB.LinkStatus, out var status);
         return status == (int) GLEnum.True;
+    }
+
+    private Dictionary<string, int> UniformCache = new();
+
+    public void ClearUniformCache() {
+        UniformCache.Clear();
+    }
+
+    public int GetUniformLocation(string name) {
+        if (!UniformCache.ContainsKey(name))
+            UniformCache[name] = GraphicsReferences.OpenGl.GetUniformLocation(OpenGlHandle, "transform");
+        
+        if (UniformCache[name] == -1)
+            throw new ArgumentException($"{name} uniform was not found on shader.");
+        return UniformCache[name];
+    }
+
+    public unsafe void SetMatrix4x4(string name, Matrix4x4 value) {
+        var location = GetUniformLocation(name);
+        GraphicsReferences.OpenGl.UniformMatrix4(location, 1, false, (float*) &value);
     }
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using Serilog;
@@ -13,6 +14,8 @@ public class TestComponent : Behaviour {
     public Shader? _shader;
     public Mesh _mesh;
     
+    public event Action? onAwake;
+
     void Awake() {
         GraphicsReferences.OpenGl = Game.Instance.View.CreateOpenGL();
         _tex = Texture.FromFile("test.png");
@@ -28,13 +31,15 @@ public class TestComponent : Behaviour {
                 1u, 2u, 3u
             });
         Log.Information("Test");
+        onAwake?.Invoke();
     }
 
     unsafe void Draw() {
         var gl = GraphicsReferences.OpenGl;
-        Immedieate.Clear(ClearBufferMask.ColorBufferBit);
         gl.BindVertexArray(_mesh.VaoHandle);
-        Immedieate.UseShader(_shader??Shader.Default);
+        var shader = _shader ?? Shader.Default;
+        shader.SetMatrix4x4("transform", Transform.GlobalMatrix);
+        Immedieate.UseShader(shader);
         if (_tex is not null) Immedieate.BindTexture(_tex);
         
         gl.DrawElements(_mesh.PrimitiveType, (uint)_mesh.Indices.Length, DrawElementsType.UnsignedInt, (void*) 0);

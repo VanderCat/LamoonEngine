@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Lamoon.Engine.Dev;
 using Serilog;
 using Serilog.Events;
@@ -14,6 +15,7 @@ namespace Lamoon.Engine;
 
 public class Game {
     protected static Game? _instance;
+    private Stopwatch sw;
 
     public static Game Instance {
         get {
@@ -64,10 +66,12 @@ public class Game {
     }
     
     public void Draw(double deltaTime) {
+        Immedieate.Clear(ClearBufferMask.ColorBufferBit);
         SceneManager.Draw();
     }
 
     public void Load() {
+        sw = Stopwatch.StartNew();
         var gl = View.CreateOpenGL();
         GraphicsReferences.OpenGl = gl;
         #if DEBUG
@@ -97,10 +101,11 @@ public class Game {
 
     public void Update(double deltaTime) {
         Time.Delta = deltaTime;
+        Time.CurrentTime = sw.Elapsed.TotalSeconds;
         SceneManager.Update();
     }
 
     public void FrameBufferResize(Vector2D<int> newSize) {
-        
+        GraphicsReferences.OpenGl.Viewport(Vector2D<int>.Zero, newSize);
     }
 }

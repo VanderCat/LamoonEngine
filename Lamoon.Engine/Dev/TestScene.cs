@@ -1,3 +1,5 @@
+using System.Numerics;
+using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
 
@@ -13,6 +15,15 @@ public class TestScene : IScene {
     public void Initialize() {
         var a = new GameObject();
         a.AddComponent<TestComponent>();
+        a.AddComponent<Movement>();
+        var help = new GameObject();
+        var b = help.AddComponent<TestComponent>();
+        b.onAwake += () => {
+            b._tex = Texture.FromFile("test1.png");
+        };
+        help.Transform.LocalPosition = new Vector3(0.5f, -1f, 1f);
+        help.Transform.Parent = a.Transform;
+        a.Transform.LocalRotation = Quaternion.CreateFromYawPitchRoll(0,Single.DegreesToRadians(20), Single.DegreesToRadians(45));
 
         foreach (var gameObject in GameObjects) {
             gameObject.Initialize();
