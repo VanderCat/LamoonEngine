@@ -1,4 +1,7 @@
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using Lamoon.Filesystem;
+using Serilog;
 using Silk.NET.OpenGL;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -105,13 +108,48 @@ public class Texture : IDisposable {
         Unbind(Type);
     }
 
-    public static Texture FromFile(string path) {
-        using var img = Image.Load<Bgra32>(path);
-        img.Mutate(x => x.Flip(FlipMode.Vertical));
-        var pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
-        img.CopyPixelDataTo(pixelBytes);
+    public static Texture Missing = FromStream(Assembly.GetAssembly(typeof(Texture)).GetManifestResourceStream("Lamoon.Graphics.Textures._missing_texture.png"));
 
-        return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes, dataFormat:PixelFormat.Bgra);
+    [Obsolete("Please use Texture.FromFileSystem, this is left in case if you need raw filesystem access")]
+    public static Texture FromFile(string path) {
+        try {
+            using var img = Image.Load<Bgra32>(path);
+            img.Mutate(x => x.Flip(FlipMode.Vertical));
+            var pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
+            img.CopyPixelDataTo(pixelBytes);
+
+            return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes, dataFormat: PixelFormat.Bgra);
+        }
+        catch (Exception e) {
+            Log.Error("Texture failed to load!\n"+e);
+            return Missing;
+        }
+    }
+
+    public static Texture FromStream(Stream stream) {
+        try {
+            using var img = Image.Load<Bgra32>(stream);
+            img.Mutate(x => x.Flip(FlipMode.Vertical));
+            var pixelBytes = new byte[img.Width * img.Height * Unsafe.SizeOf<Bgra32>()];
+            img.CopyPixelDataTo(pixelBytes);
+
+            return new Texture(new Size(img.Size.Width, img.Size.Height), pixelBytes, dataFormat:PixelFormat.Bgra);
+        }
+        catch (Exception e) {
+            Log.Error("Texture failed to load!\n"+e);
+            return Missing;
+        }
+    }
+    
+    public static Texture FromFileSystem(string path) {
+        try {
+            using var stream = Files.GetFile(path).GetStream();
+            return FromStream(stream);
+        }
+        catch (Exception e) {
+            Log.Error("Texture failed to load!\n"+e);
+            return Missing;
+        }
     }
 
     public void Dispose() {

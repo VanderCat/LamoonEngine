@@ -18,7 +18,7 @@ public class TestComponent : Behaviour {
 
     void Awake() {
         GraphicsReferences.OpenGl = Game.Instance.View.CreateOpenGL();
-        _tex = Texture.FromFile("test.png");
+        _tex = Texture.FromFileSystem("Textures/test.png");
         _shader = Shader.Default;
         _mesh = new Mesh(new[] {
                 0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
@@ -30,7 +30,6 @@ public class TestComponent : Behaviour {
                 0u, 1u, 3u,
                 1u, 2u, 3u
             });
-        Log.Information("Test");
         onAwake?.Invoke();
     }
 

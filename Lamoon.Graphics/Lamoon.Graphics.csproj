@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Serilog" Version="3.1.1" />
       <PackageReference Include="Silk.NET.OpenGL" Version="2.20.0" />
       <PackageReference Include="SixLabors.ImageSharp" Version="3.1.2" />
       <PackageReference Include="SkiaSharp" Version="2.88.7" />
@@ -19,6 +20,12 @@
       <EmbeddedResource Include="Shaders\base.frag" />
       <None Remove="Shaders\base.vert" />
       <EmbeddedResource Include="Shaders\base.vert" />
+      <None Remove="Textures\_missing_texture.png" />
+      <EmbeddedResource Include="Textures\_missing_texture.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Lamoon.Filesystem\Lamoon.Filesystem.csproj" />
     </ItemGroup>
 
 </Project>

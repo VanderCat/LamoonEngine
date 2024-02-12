@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Lamoon.Engine.Dev;
+using Lamoon.Filesystem;
 using Serilog;
 using Serilog.Events;
 using Silk.NET.Maths;
@@ -59,7 +61,13 @@ public class Game {
         view.FocusChanged += FocusChanged;
     }
 
-    public void RunWindow() => Window.Run();
+    public void RunWindow() {
+        try { Window.Run(); }
+        catch (Exception e) {
+            Log.Fatal(e.ToString());
+            throw;
+        }
+    }
 
     public void FocusChanged(bool isFocused) {
         
@@ -71,6 +79,13 @@ public class Game {
     }
 
     public void Load() {
+        var assemblyFs = new AssemblyFilesystem(Assembly.GetExecutingAssembly());
+        assemblyFs.Mount();
+        var WorkFolder = new FolderFilesystem("Data");
+        WorkFolder.Mount();
+        //var mod = new FolderFilesystem("Mods/TestMod");
+        //mod.Mount();
+
         sw = Stopwatch.StartNew();
         var gl = View.CreateOpenGL();
         GraphicsReferences.OpenGl = gl;
