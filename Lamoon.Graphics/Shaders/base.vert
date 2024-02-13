@@ -7,11 +7,13 @@ layout (location = 1) in vec2 aTexCoords;
 
 // Likewise, we also assign an out attribute to go into the fragment shader.
 out vec2 frag_texCoords;
-uniform mat4 transform;
+uniform mat4 transform = mat4(1);
+uniform mat4 view = mat4(1);
+uniform mat4 projection = mat4(1);
         
 void main()
 {
-    gl_Position = transform * vec4(aPosition, 1.0f);
+    gl_Position = projection * view * transform * vec4(aPosition, 1.0f);
 
     // This basic vertex shader does no additional processing of texture coordinates, so we can pass them
     // straight to the fragment shader.

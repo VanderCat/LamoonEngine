@@ -1,4 +1,5 @@
 using System.Numerics;
+using Lamoon.Engine.Components;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
@@ -13,7 +14,7 @@ public class TestScene : IScene {
     public List<GameObject> _gameObjects = new();
     public List<GameObject> GameObjects => _gameObjects;
     public void Initialize() {
-        var a = new GameObject();
+        /*var a = new GameObject();
         a.AddComponent<TestComponent>();
         a.AddComponent<Movement>();
         var help = new GameObject();
@@ -24,7 +25,55 @@ public class TestScene : IScene {
         help.Transform.LocalPosition = new Vector3(0.5f, -1f, 1f);
         help.Transform.Parent = a.Transform;
         a.Transform.LocalRotation = Quaternion.CreateFromYawPitchRoll(0,Single.DegreesToRadians(20), Single.DegreesToRadians(45));
+        */
+        var camera = new GameObject();
+        camera.Name = "Camera";
+        var cameraComponent = camera.AddComponent<Camera>();
+        
 
+        var testMesh = new GameObject();
+        testMesh.Name = "TestMesh";
+        var mesh  = new Mesh(new[] {
+                0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+                0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+                -0.5f, 0.5f, 0.0f, 0.0f, 1.0f
+            },
+            new[] {
+                0u, 1u, 3u,
+                1u, 2u, 3u
+            });
+        var material = new Material(Texture.FromFileSystem("Textures/test1.png"), Shader.Default);
+        var meshRenderer = testMesh.AddComponent<MeshRenderer>();
+        meshRenderer.Mesh = mesh;
+        meshRenderer.Material = material;
+        
+        /*testMesh.Transform.LocalRotation 
+            = Quaternion.CreateFromAxisAngle(
+                new Vector3(1, 0, 0), 
+                float.DegreesToRadians(-55f)
+            );*/
+        camera.Transform.LocalPosition = new Vector3(0, 2.5f, 5f);
+        camera.Transform.LocalRotation 
+            = Quaternion.CreateFromAxisAngle(
+                new Vector3(1, 0, 0), 
+                float.DegreesToRadians(-20f)
+            );
+        testMesh.AddComponent<Movement>();
+        cameraComponent.OrthoScale = 0.001f;
+        cameraComponent.Orthographic = false;
+        
+        var testMesh2 = new GameObject();
+        testMesh2.Name = "TestMesh";
+        var material2 = new Material(Texture.FromFileSystem("Textures/test.png"), Shader.Default);
+        var meshRenderer2 = testMesh2.AddComponent<MeshRenderer>();
+        meshRenderer2.Mesh = mesh;
+        meshRenderer2.Material = material2;
+        camera.AddComponent<Rotation>();
+
+        //var watcher = camera.AddComponent<Watcher>();
+        //watcher.watch = testMesh.Transform;
+        
         foreach (var gameObject in GameObjects) {
             gameObject.Initialize();
         }

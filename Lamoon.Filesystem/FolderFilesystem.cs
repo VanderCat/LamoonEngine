@@ -8,7 +8,7 @@ public class FolderFilesystem : IMountable {
         
     }
 
-    public FolderFilesystem(string path, bool allowCreation = false) {
+    public FolderFilesystem(string path, bool allowCreation = false, bool readOnly = false) {
         PhysicalPath = path;
         DirectoryInfo = new DirectoryInfo(path);
         
@@ -17,11 +17,14 @@ public class FolderFilesystem : IMountable {
                 throw new DirectoryNotFoundException();
             else 
                 DirectoryInfo.Create();
+        ForceReadOnly = readOnly;
     }
 
     public readonly DirectoryInfo DirectoryInfo;
 
     public string PhysicalPath { get; }
+
+    public bool ForceReadOnly;
     public bool IsReadOnly => DirectoryInfo.Attributes.HasFlag(FileAttributes.ReadOnly);
     public void OnMount() {
         Log.Debug("Mounted {0}", PhysicalPath);

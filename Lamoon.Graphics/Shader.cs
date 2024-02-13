@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Reflection;
+using Serilog;
 using Silk.NET.OpenGL;
 
 namespace Lamoon.Graphics; 
@@ -60,15 +61,66 @@ public class Shader {
 
     public int GetUniformLocation(string name) {
         if (!UniformCache.ContainsKey(name))
-            UniformCache[name] = GraphicsReferences.OpenGl.GetUniformLocation(OpenGlHandle, "transform");
+            UniformCache[name] = GraphicsReferences.OpenGl.GetUniformLocation(OpenGlHandle, name);
+        var info = "";
         
         if (UniformCache[name] == -1)
             throw new ArgumentException($"{name} uniform was not found on shader.");
         return UniformCache[name];
     }
 
-    public unsafe void SetMatrix4x4(string name, Matrix4x4 value) {
+    public unsafe void SetMatrix4x4(string name, Matrix4x4 matrix) {
+        GraphicsReferences.OpenGl.UseProgram(OpenGlHandle);
         var location = GetUniformLocation(name);
-        GraphicsReferences.OpenGl.UniformMatrix4(location, 1, false, (float*) &value);
+        GraphicsReferences.OpenGl.UniformMatrix4(location, 1, false, (float*) &matrix);
+    }
+    public void SetVector2(string name, Vector2 vector) {
+        GraphicsReferences.OpenGl.UseProgram(OpenGlHandle);
+        var location = GetUniformLocation(name);
+        GraphicsReferences.OpenGl.Uniform2(location, vector);
+    }
+    public void SetVector3(string name, Vector3 vector) {
+        GraphicsReferences.OpenGl.UseProgram(OpenGlHandle);
+        var location = GetUniformLocation(name);
+        GraphicsReferences.OpenGl.Uniform3(location, vector);
+    }
+    public void SetVector4(string name, Vector4 vector) {
+        GraphicsReferences.OpenGl.UseProgram(OpenGlHandle);
+        var location = GetUniformLocation(name);
+        GraphicsReferences.OpenGl.Uniform4(location, vector);
+    }
+    public void SetFloat(string name, float value) {
+        GraphicsReferences.OpenGl.UseProgram(OpenGlHandle);
+        var location = GetUniformLocation(name);
+        GraphicsReferences.OpenGl.Uniform1(location, value);
+    }
+
+    public void SetUniform(string name, float value) {
+        SetFloat(name, value);
+    }
+    public void SetUniform(string name, Vector2 value) {
+        SetVector2(name, value);
+    }
+    public void SetUniform(string name, Vector3 value) {
+        SetVector3(name, value);
+    }
+    public void SetUniform(string name, Vector4 value) {
+        SetVector4(name, value);
+    }
+    public void SetUniform(string name, Matrix4x4 value) {
+        SetMatrix4x4(name, value);
+    }
+
+    public bool HasUniform(string name) {
+        if (!UniformCache.ContainsKey(name))
+            try {
+                GetUniformLocation(name);
+                return true;
+            }
+            catch (ArgumentException e) {
+                return false;
+            }
+
+        return UniformCache[name] != -1;
     }
 }
