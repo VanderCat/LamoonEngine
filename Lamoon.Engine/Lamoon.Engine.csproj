@@ -7,12 +7,22 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Serilog" Version="3.1.2-dev-02097" />
       <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00972" />
+      <PackageReference Include="SharpGLTF.Core" Version="1.0.0-alpha0031" />
+      <PackageReference Include="Silk.NET.GLFW" Version="2.20.0" />
       <PackageReference Include="Silk.NET.OpenGL" Version="2.20.0" />
-      <PackageReference Include="Silk.NET.Windowing.Sdl" Version="2.20.0" />
+      <PackageReference Include="Silk.NET.Windowing.Glfw" Version="2.20.0" />
     </ItemGroup>
 
     <ItemGroup>

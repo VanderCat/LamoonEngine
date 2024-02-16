@@ -80,11 +80,33 @@ public class Texture : IDisposable {
 
     public Texture(
         Size size, 
+        InternalFormat internalFormat = InternalFormat.Rgba8,
+        TextureTarget type = TextureTarget.Texture2D
+        ) {
+        var gl = GraphicsReferences.OpenGl;
+        OpenGlHandle = gl.GenTexture();
+        Type = type;
+        Format = internalFormat;
+        Bind(this);
+        unsafe {
+            gl.TexImage2D(Type, 0, internalFormat, (uint)size.Width,
+                (uint)size.Height, 0, PixelFormat.Rgb, PixelType.UnsignedByte, (void*) 0);
+        }
+
+        WrapModeX = TextureWrapMode.Repeat;
+        WrapModeY = TextureWrapMode.Repeat;
+
+        MinFilter = TextureMinFilter.LinearMipmapLinear;
+        MagFilter = TextureMagFilter.Linear;
+    }
+    
+    public Texture(
+        Size size, 
         byte[] data, 
         InternalFormat internalFormat = InternalFormat.Rgba8, 
         PixelFormat dataFormat = PixelFormat.Rgba,
         TextureTarget type = TextureTarget.Texture2D
-        ) {
+    ) {
         var gl = GraphicsReferences.OpenGl;
         OpenGlHandle = gl.GenTexture();
         Type = type;

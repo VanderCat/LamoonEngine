@@ -3,6 +3,8 @@ using Lamoon.Engine.Components;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
+using Serilog;
+using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.Engine.Dev; 
 
@@ -71,6 +73,19 @@ public class TestScene : IScene {
         meshRenderer2.Material = material2;
         camera.AddComponent<Rotation>();
 
+        var testModel = Model.FromFileSystem("Models/rocks_03.obj");
+        testModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        var skiaDraw = new GameObject();
+        skiaDraw.AddComponent<SkiaCanvas>();
+        var drawHierarcy = new GameObject();
+        drawHierarcy.Transform.Parent = skiaDraw.Transform;
+        drawHierarcy.AddComponent<Hierarchy>();
+
+        //var model = testModel.GetChildByNameRecursively("wood_barrel_big");
+        //Log.Debug(model!.Transform.ToString());
+        
+
         //var watcher = camera.AddComponent<Watcher>();
         //watcher.watch = testMesh.Transform;
         
@@ -90,5 +105,6 @@ public class TestScene : IScene {
             gameObject.Draw();
             
         }
+        
     }
 }

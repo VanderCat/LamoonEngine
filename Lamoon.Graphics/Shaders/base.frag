@@ -13,4 +13,6 @@ uniform vec4 color = vec4(1);
 void main()
 {
     out_color = texture(uTexture, frag_texCoords)*color;
+    if (out_color.a == 0)
+        discard;
 }

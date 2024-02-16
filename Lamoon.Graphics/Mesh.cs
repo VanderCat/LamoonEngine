@@ -10,6 +10,17 @@ public class Mesh {
     public float[] Vertices;
     public uint[] Indices;
     
+    public static readonly Mesh Quad = new (new[] {
+            1f, 1f, 0.0f, 1.0f, 1.0f,
+            1f, -1f, 0.0f, 1.0f, 0.0f,
+            -1f, -1f, 0.0f, 0.0f, 0.0f,
+            -1f, 1f, 0.0f, 0.0f, 1.0f
+        },
+        new[] {
+            0u, 1u, 3u,
+            1u, 2u, 3u
+        });
+    
     public PrimitiveType PrimitiveType { get; private set; }
 
     public Mesh(

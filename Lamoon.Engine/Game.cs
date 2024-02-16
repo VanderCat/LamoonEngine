@@ -9,10 +9,11 @@ using Serilog.Events;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
-using Silk.NET.Windowing.Sdl;
 using Lamoon.Graphics;
+using Lamoon.Graphics.Skia;
 using NekoLib.Scenes;
-using Silk.NET.SDL;
+using Silk.NET.GLFW;
+using Silk.NET.Windowing.Glfw;
 
 namespace Lamoon.Engine;
 
@@ -33,10 +34,11 @@ public class Game {
     }
     
     static Game() {
-        SdlWindowing.Use();
+        GlfwWindowing.Use();
         
         const string outputTemplate = "{Timestamp:HH:mm:ss} [{Level}] {Name}: {Message}{Exception}{NewLine}";
         Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
             .Enrich.FromLogContext()
             .WriteTo.Console(LogEventLevel.Verbose, outputTemplate)
             .WriteTo.File($"logs/lamoon{DateTime.Now:yy.MM.dd-hh.MM.ss}.log", LogEventLevel.Verbose, outputTemplate)
@@ -48,10 +50,14 @@ public class Game {
     public IView View;
     
     public void InitializeWindow() {
+        Glfw.GetApi().WindowHint(WindowHintBool.OpenGLDebugContext, true);
+        Glfw.GetApi().WindowHint(WindowHintContextApi.ContextCreationApi, ContextApi.EglContextApi);
         Window = Silk.NET.Windowing.Window.Create(WindowOptions.Default with {
-            Size = new(512, 512)
+            Size = new(512, 512),
+            WindowBorder = WindowBorder.Fixed,
+            PreferredStencilBufferBits = 8,
+            PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8)
         });
-        SdlWindowing.GetExistingApi(Window).GLSetAttribute(GLattr.ContextFlags, (int)GLcontextFlag.DebugFlag);
     }
 
     public void BindCallbacks(IView view) {
@@ -91,6 +97,8 @@ public class Game {
 
         sw = Stopwatch.StartNew();
         var gl = View.CreateOpenGL();
+        Skia.GlContext = View.GLContext;
+
         GraphicsReferences.OpenGl = gl;
         GraphicsReferences.ScreenSize = new Size(View.FramebufferSize.X, View.FramebufferSize.Y);
         #if DEBUG
@@ -107,7 +115,7 @@ public class Game {
                         DebugSeverity.DebugSeverityLow => LogEventLevel.Information,
                         _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
                     };
-                    _openGlLogger.Write(logLevel, "{type}/{id}: "+Marshal.PtrToStringAnsi(message), type.ToString().Substring(9), id);
+                    _openGlLogger.Write(logLevel, Marshal.PtrToStringAnsi(message)+"\n"+new StackTrace(1));
                     //throw new Exception(Marshal.PtrToStringAnsi(message));
                 },
                 null);

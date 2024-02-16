@@ -23,6 +23,7 @@ public class MeshRenderer : Behaviour {
         Immedieate.PrintError();
         gl.DrawElements(Mesh.PrimitiveType, (uint)Mesh.Indices.Length, DrawElementsType.UnsignedInt, (void*) 0);*/
         gl.BindVertexArray(Mesh.VaoHandle);
+        gl.BindBuffer(GLEnum.ArrayBuffer, Mesh.VboHandle);
         var shader = Material.Shader;
         shader.SetMatrix4x4("transform", Transform.GlobalMatrix); 
         shader.SetMatrix4x4("view", Camera.CurrentlyDrawing.ViewMatrix);
@@ -32,5 +33,6 @@ public class MeshRenderer : Behaviour {
         
         //gl.PolygonMode(TriangleFace.FrontAndBack, PolygonMode.Line);
         gl.DrawElements(Mesh.PrimitiveType, (uint)Mesh.Indices.Length, DrawElementsType.UnsignedInt, (void*) 0);
+        gl.BindVertexArray(0);
     }
 }
