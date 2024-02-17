@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Lamoon.Engine.Dev;
 using Lamoon.Filesystem;
 using Serilog;
 using Serilog.Events;
@@ -78,22 +77,18 @@ public class Game {
         }
     }
 
-    public void FocusChanged(bool isFocused) {
+    public virtual void FocusChanged(bool isFocused) {
         
     }
     
-    public void Draw(double deltaTime) {
+    public virtual void Draw(double deltaTime) {
         Immedieate.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         SceneManager.Draw();
     }
 
-    public void Load() {
+    public virtual void Load() {
         var assemblyFs = new AssemblyFilesystem(Assembly.GetExecutingAssembly());
         assemblyFs.Mount();
-        var WorkFolder = new FolderFilesystem("Data");
-        WorkFolder.Mount();
-        //var mod = new FolderFilesystem("Mods/TestMod");
-        //mod.Mount();
 
         sw = Stopwatch.StartNew();
         var gl = View.CreateOpenGL();
@@ -121,20 +116,19 @@ public class Game {
                 null);
         }
         #endif
-        SceneManager.LoadScene(new TestScene());
     }
     
-    public void Closing() {
+    public virtual void Closing() {
         
     }
 
-    public void Update(double deltaTime) {
+    public virtual void Update(double deltaTime) {
         Time.Delta = deltaTime;
         Time.CurrentTime = sw.Elapsed.TotalSeconds;
         SceneManager.Update();
     }
 
-    public void FrameBufferResize(Vector2D<int> newSize) {
+    public virtual void FrameBufferResize(Vector2D<int> newSize) {
         GraphicsReferences.OpenGl.Viewport(Vector2D<int>.Zero, newSize);
         GraphicsReferences.ScreenSize = new Size(newSize.X, newSize.Y);
     }

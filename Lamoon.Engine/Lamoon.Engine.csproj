@@ -31,4 +31,13 @@
       <ProjectReference Include="..\Lamoon.Graphics\Lamoon.Graphics.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Copy Update="Shaders\error.frag" SourceFiles="Shaders\error.frag" DestinationFiles="Data\Shaders\error.frag"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Shaders\error.frag" />
+      <EmbeddedResource Include="Shaders\error.frag" />
+    </ItemGroup>
+
 </Project>

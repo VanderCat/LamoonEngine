@@ -1,4 +1,5 @@
 using System.Reflection;
+using Serilog;
 
 namespace Lamoon.Filesystem; 
 
@@ -20,10 +21,10 @@ public class AssemblyFilesystem : IMountable {
     public AssemblyFilesystem() : this(Assembly.GetEntryAssembly()) { }
 
     public void OnMount() {
-        
+        Log.Debug("Mounted assembly fs for {0}", Assembly.FullName);
     }
 
-    private string TransfromPath(string path) => Assembly.GetName()+"."+path.Replace("/", ".");
+    private string TransfromPath(string path) => Assembly.GetName().Name+"."+path.Replace("/", ".");
 
     public IFile GetFile(string path) {
         if (!FileExists(path))
@@ -49,7 +50,9 @@ public class AssemblyFilesystem : IMountable {
     }
 
     public bool FileExists(string path) {
-        using var stream = Assembly.GetManifestResourceStream(path);
+        var assemblyPath = TransfromPath(path);
+        Log.Verbose(assemblyPath);
+        using var stream = Assembly.GetManifestResourceStream(assemblyPath);
         return stream is not null;
     }
 }

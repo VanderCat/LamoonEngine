@@ -32,6 +32,8 @@
       <EmbeddedResource Include="Shaders\base.vert" />
       <None Remove="Textures\_missing_texture.png" />
       <EmbeddedResource Include="Textures\_missing_texture.png" />
+      <None Remove="Models\missing_model.obj" />
+      <EmbeddedResource Include="Models\missing_model.obj" />
     </ItemGroup>
 
     <ItemGroup>

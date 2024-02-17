@@ -1,12 +1,11 @@
-using System.Numerics;
+using Lamoon.Engine;
 using Lamoon.Graphics;
 using NekoLib.Core;
-using Serilog;
 using Silk.NET.OpenGL;
 using Texture = Lamoon.Graphics.Texture;
 using Shader = Lamoon.Graphics.Shader;
 
-namespace Lamoon.Engine.Dev; 
+namespace Lamoon.TestGame.Dev; 
 
 public class TestComponent : Behaviour {
 

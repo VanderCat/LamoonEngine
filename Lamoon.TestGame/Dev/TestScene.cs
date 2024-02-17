@@ -3,10 +3,11 @@ using Lamoon.Engine.Components;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
-using Serilog;
+using Lamoon.Engine;
+
 using Texture = Lamoon.Graphics.Texture;
 
-namespace Lamoon.Engine.Dev; 
+namespace Lamoon.TestGame.Dev; 
 
 public class TestScene : IScene {
     public string Name => "TestScene";
@@ -35,16 +36,7 @@ public class TestScene : IScene {
 
         var testMesh = new GameObject();
         testMesh.Name = "TestMesh";
-        var mesh  = new Mesh(new[] {
-                0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-                0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-                -0.5f, 0.5f, 0.0f, 0.0f, 1.0f
-            },
-            new[] {
-                0u, 1u, 3u,
-                1u, 2u, 3u
-            });
+        var mesh  = Mesh.Quad;
         var material = new Material(Texture.FromFileSystem("Textures/test1.png"), Shader.Default);
         var meshRenderer = testMesh.AddComponent<MeshRenderer>();
         meshRenderer.Mesh = mesh;
@@ -73,8 +65,9 @@ public class TestScene : IScene {
         meshRenderer2.Material = material2;
         camera.AddComponent<Rotation>();
 
-        var testModel = Model.FromFileSystem("Models/rocks_03.obj");
+        var testModel = Model.FromFileSystem("Models/big_wood_barrel.FBX");
         testModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
+        var brokenModel = Model.FromFileSystem("Models/i_dont_exsist.fbx");
 
         var skiaDraw = new GameObject();
         skiaDraw.AddComponent<SkiaCanvas>();

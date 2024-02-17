@@ -28,6 +28,11 @@ public class MeshRenderer : Behaviour {
         shader.SetMatrix4x4("transform", Transform.GlobalMatrix); 
         shader.SetMatrix4x4("view", Camera.CurrentlyDrawing.ViewMatrix);
         shader.SetMatrix4x4("projection", Camera.CurrentlyDrawing.ProjectionMatrix);
+        try {
+            shader.SetFloat("uTime", Time.CurrentTimeF);
+        }
+        catch (ArgumentException e) { }
+
         Immedieate.UseShader(shader);
         Immedieate.BindTexture(Material.Textures[0]);
         

@@ -1,3 +1,5 @@
+using System.Reflection;
+using Serilog;
 using Silk.NET.OpenGL;
 
 namespace Lamoon.Graphics; 
@@ -24,7 +26,27 @@ public class UnlinkedShader : IDisposable {
         return vStatus == (int) GLEnum.True;
     }
 
+    public static UnlinkedShader DefaultVertex {
+        get {
+            using var stream = Assembly.GetAssembly(typeof(UnlinkedShader))
+                .GetManifestResourceStream("Lamoon.Graphics.Shaders.base.vert");
+            using var streamReader = new StreamReader(stream);
+            var code = streamReader.ReadToEnd();
+            return new UnlinkedShader(ShaderType.VertexShader, code);
+        }
+    }
+    public static UnlinkedShader DefaultFragment {
+        get {
+            using var stream = Assembly.GetAssembly(typeof(UnlinkedShader))
+                .GetManifestResourceStream("Lamoon.Graphics.Shaders.base.frag");
+            using var streamReader = new StreamReader(stream);
+            var code = streamReader.ReadToEnd();
+            return new UnlinkedShader(ShaderType.FragmentShader, code);
+        }
+    }
+
     public void Dispose() {
+        Log.Verbose("Disposed shader {0}",OpenGlHandle);
         GraphicsReferences.OpenGl.DeleteShader(OpenGlHandle);
     }
 }

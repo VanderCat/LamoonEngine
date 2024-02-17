@@ -7,20 +7,39 @@ using NekoLib.Core;
 using Serilog;
 using SharpGLTF.Schema2;
 using Silk.NET.Assimp;
+using Silk.NET.OpenGL;
+using Material = Lamoon.Graphics.Material;
 using Mesh = Silk.NET.Assimp.Mesh;
 using Node = SharpGLTF.Schema2.Node;
 using Scene = Silk.NET.Assimp.Scene;
+using Shader = Lamoon.Graphics.Shader;
+using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.Engine; 
 
 public static class Model {
     private static ILogger Log = Serilog.Log.Logger.ForContext("Name", "ModelLoader");
+
+    private static Material ErrorMat = new (Texture.Missing, new Shader(UnlinkedShader.DefaultVertex, new UnlinkedShader(ShaderType.FragmentShader, Files.GetFile("Shaders/error.frag").Read())));
+    public static GameObject SpawnErrorModel() {
+        var gameObject = new GameObject();
+        var meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer.Mesh = Graphics.Mesh.Default;
+        meshRenderer.Material = ErrorMat;
+        gameObject.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(180f));
+        return gameObject;
+    }
     
     public unsafe static GameObject FromFileSystem(string path) {
         Log.Information("Loading model from {0}", path);
+        if (!Files.FileExists(path)) {
+            Log.Error("Failed to load model {0}", path);
+            return SpawnErrorModel();
+        }
+        var file = Files.GetFile(path);
         var assimp = Assimp.GetApi();
         Log.Verbose("Got AssImp api {0}.{1}", assimp.GetVersionMajor(), assimp.GetVersionMinor());
-        var bytes = Files.GetFile(path).ReadBinary();
+        var bytes = file.ReadBinary();
         Log.Verbose("Successfully read the file");
         Log.Verbose("Trying to read byte array at {pointer}, with length {lenght}", new IntPtr(&bytes), bytes.Length);
         Scene* scene;

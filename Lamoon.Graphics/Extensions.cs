@@ -11,6 +11,9 @@ public static class Extensions {
             ogl.Add(vertex.Position.Z);
             ogl.Add(vertex.TexCoords.X);
             ogl.Add(vertex.TexCoords.Y);
+            ogl.Add(vertex.Normal.X);
+            ogl.Add(vertex.Normal.Y);
+            ogl.Add(vertex.Normal.Z);
         }
 
         return ogl.ToArray();
