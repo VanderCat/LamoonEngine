@@ -91,6 +91,7 @@ public class Mesh {
         var verticies = new List<Vertex>();
         var indicies = new List<uint>();
         var vectors = new List<Vector3>();
+        var texture = new List<Vector2>();
         foreach (var line in lines) {
             if (line.StartsWith("#")) continue;
             if (line.StartsWith("v ")) {
@@ -113,13 +114,23 @@ public class Mesh {
                 }
                 vectors.Add(vector);
             }
+            
+            if (line.StartsWith("vt ")) {
+                var vt = line.Substring(3).Split(" ");
+                var vector = new Vector2();
+                for (var i = 0; i < 2; i++) {
+                    vector[i] = float.Parse(vt[i]);
+                }
+                texture.Add(vector);
+            }
 
             if (line.StartsWith("f")) {
                 var faces = line.Substring(2).Split(" ");
                 foreach (var face in faces) {
                     var vidx = uint.Parse(face.Split("/")[0])-1;
-                    var vnidx = uint.Parse(face.Split("/")[2])-1;
-                    verticies[(int)vidx] = verticies[(int)vidx] with {Normal = vectors[(int)vnidx]};
+                    var vtidx = int.Parse(face.Split("/")[1])-1;
+                    var vnidx = int.Parse(face.Split("/")[2])-1;
+                    verticies[(int)vidx] = verticies[(int)vidx] with {Normal = vectors[vnidx], TexCoords = texture[vtidx]};
                     indicies.Add(vidx);
                 }
             }

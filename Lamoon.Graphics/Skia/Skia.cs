@@ -26,7 +26,15 @@ public class Skia {
         Log.Debug("Loading Skia");
         _gpuInterface =  GRGlInterface.CreateOpenGl(name => {
             Log.Verbose("Tring to get opengl with name: {name}", name);
-            var result = GlContext.GetProcAddress(name);
+            IntPtr result;
+            try {
+                result = GlContext.GetProcAddress(name);
+            }
+            catch (Exception e) {
+                Log.Verbose("{name} was not found!", name);
+                result = IntPtr.Zero;
+            }
+            
             return result;
         });
         if (!_gpuInterface.Validate()) {

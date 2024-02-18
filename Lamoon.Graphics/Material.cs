@@ -4,19 +4,25 @@ using System.Reflection;
 
 namespace Lamoon.Graphics; 
 
-public class Material(Texture texture, Shader shader) {
+public class Material {
     public static Material Default = new(Texture.Missing, Shader.Default);
     
-    public List<Texture> Textures = new[]{texture}.ToList();
+    public List<Texture> Textures;
 
+    private Shader _shader;
     public Shader Shader {
         get {
-            return shader;
+            return _shader;
         }
         set {
-            shader = value;
+            _shader = value;
             UnformValues.Clear();
         }
+    }
+
+    public Material(Texture texture, Shader shader) {
+        Textures = new[] {texture}.ToList();
+        _shader = shader;
     }
 
     private Dictionary<string, object> UnformValues = new();
@@ -41,5 +47,6 @@ public class Material(Texture texture, Shader shader) {
             throw new ArgumentException("Specified Uniform has not been found");
         UnformValues[name] = value ?? throw new ArgumentNullException(nameof(value));
     }
-    
+
+    public Material(Shader shader) : this(null, shader) { }
 }

@@ -79,7 +79,7 @@ public static class Model {
                 {
                     // a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't 
                     // use models where a vertex can have multiple texture coordinates so we always take the first set (0).
-                    Vector3 texcoord3 = mesh->MTextureCoords[0][i];
+                    Vector3 texcoord3 = mesh->MTextureCoords[0][j];
                     vert.TexCoords = new Vector2(texcoord3.X, texcoord3.Y);
                 }
 

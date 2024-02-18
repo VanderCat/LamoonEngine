@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\NekoLib\NekoLib\NekoLib.csproj" />
+      <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JoltPhysicsSharp" Version="2.3.1" />
+    </ItemGroup>
+
+</Project>

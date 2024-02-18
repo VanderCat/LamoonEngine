@@ -18,6 +18,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
+      <ProjectReference Include="..\Lamoon.Physics\Lamoon.Physics.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Silk.NET.Input" Version="2.20.0" />
     </ItemGroup>
 
 </Project>

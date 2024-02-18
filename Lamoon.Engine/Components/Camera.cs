@@ -25,7 +25,7 @@ public class Camera : Behaviour {
 
     public Matrix4x4 ViewMatrix {
         get {
-            if(Matrix4x4.Invert(Matrix4x4.CreateTranslation(Transform.LocalPosition)*Matrix4x4.CreateFromQuaternion(Transform.LocalRotation), out var mat))
+            if(Matrix4x4.Invert(Matrix4x4.CreateFromQuaternion(Transform.LocalRotation)*Matrix4x4.CreateTranslation(Transform.LocalPosition), out var mat))
                 return mat;
             throw new Exception("Could not calculate ViewMatrix!");
         }

@@ -4,7 +4,7 @@ using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
 using Lamoon.Engine;
-
+using Lamoon.Filesystem;
 using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.TestGame.Dev; 
@@ -53,6 +53,7 @@ public class TestScene : IScene {
                 new Vector3(1, 0, 0), 
                 float.DegreesToRadians(-20f)
             );
+        camera.AddComponent<ControlCamera>();
         testMesh.AddComponent<Movement>();
         cameraComponent.OrthoScale = 0.001f;
         cameraComponent.Orthographic = false;
@@ -63,10 +64,13 @@ public class TestScene : IScene {
         var meshRenderer2 = testMesh2.AddComponent<MeshRenderer>();
         meshRenderer2.Mesh = mesh;
         meshRenderer2.Material = material2;
-        camera.AddComponent<Rotation>();
+        //camera.AddComponent<Rotation>();
 
-        var testModel = Model.FromFileSystem("Models/big_wood_barrel.FBX");
-        testModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
+        var testModel = new GameObject();
+        testModel.AddComponent<MeshRenderer>().Mesh = Mesh.FromObjStream(Files.GetFile("Models/amy.obj").GetStream());
+        testModel.Transform.LocalScale = new Vector3(10f, 10f, 10f);
+        testModel.AddComponent<Movement>();
+        testModel.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(90));
         var brokenModel = Model.FromFileSystem("Models/i_dont_exsist.fbx");
 
         var skiaDraw = new GameObject();

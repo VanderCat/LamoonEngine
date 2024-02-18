@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NekoLib", "..\NekoLib\NekoL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Filesystem", "Lamoon.Filesystem\Lamoon.Filesystem.csproj", "{35302FB8-F05F-4040-A82A-6873A459D922}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Physics", "Lamoon.Physics\Lamoon.Physics.csproj", "{8056861D-2429-4FEB-ABF0-C47FE465A219}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{35302FB8-F05F-4040-A82A-6873A459D922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35302FB8-F05F-4040-A82A-6873A459D922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35302FB8-F05F-4040-A82A-6873A459D922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8056861D-2429-4FEB-ABF0-C47FE465A219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8056861D-2429-4FEB-ABF0-C47FE465A219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8056861D-2429-4FEB-ABF0-C47FE465A219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8056861D-2429-4FEB-ABF0-C47FE465A219}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

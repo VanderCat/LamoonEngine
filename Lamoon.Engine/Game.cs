@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
+using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Lamoon.Filesystem;
@@ -52,7 +53,7 @@ public class Game {
         Glfw.GetApi().WindowHint(WindowHintBool.OpenGLDebugContext, true);
         Glfw.GetApi().WindowHint(WindowHintContextApi.ContextCreationApi, ContextApi.EglContextApi);
         Window = Silk.NET.Windowing.Window.Create(WindowOptions.Default with {
-            Size = new(512, 512),
+            Size = new(1280, 720),
             WindowBorder = WindowBorder.Fixed,
             PreferredStencilBufferBits = 8,
             PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8)
@@ -73,12 +74,13 @@ public class Game {
         try { Window.Run(); }
         catch (Exception e) {
             Log.Fatal(e.ToString());
-            throw;
+            Closing();
+            Environment.Exit(-1);
         }
     }
 
     public virtual void FocusChanged(bool isFocused) {
-        
+        SceneManager.InvokeScene("FocusChanged", isFocused);
     }
     
     public virtual void Draw(double deltaTime) {
@@ -119,17 +121,26 @@ public class Game {
     }
     
     public virtual void Closing() {
-        
+        sw.Stop();
     }
 
     public virtual void Update(double deltaTime) {
         Time.Delta = deltaTime;
         Time.CurrentTime = sw.Elapsed.TotalSeconds;
+
+        Time.FixedAccumulator += Time.DeltaF;
+        
+        while ( Time.FixedAccumulator >= Time.FixedDelta )
+        {
+            SceneManager.InvokeScene("FixedUpdate");
+            Time.FixedAccumulator -= Time.FixedDelta;
+        }
         SceneManager.Update();
     }
 
     public virtual void FrameBufferResize(Vector2D<int> newSize) {
         GraphicsReferences.OpenGl.Viewport(Vector2D<int>.Zero, newSize);
         GraphicsReferences.ScreenSize = new Size(newSize.X, newSize.Y);
+        SceneManager.InvokeScene("Resize", new Size(newSize.X, newSize.Y));
     }
 }
