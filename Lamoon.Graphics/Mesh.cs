@@ -1,5 +1,6 @@
 using System.Numerics;
 using System.Reflection;
+using System.Globalization;
 using Lamoon.Filesystem;
 using Serilog;
 using Silk.NET.OpenGL;
@@ -99,7 +100,7 @@ public class Mesh {
                 var verts = line.Substring(2).Split(" ");
                 var vector = new Vector3();
                 for (var i = 0; i < verts.Length; i++) {
-                    vector[i] = float.Parse(verts[i]);
+                    vector[i] = float.Parse(verts[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
 
                 vert.Position = vector;
@@ -110,7 +111,7 @@ public class Mesh {
                 var normal = line.Substring(3).Split(" ");
                 var vector = new Vector3();
                 for (var i = 0; i < normal.Length; i++) {
-                    vector[i] = float.Parse(normal[i]);
+                    vector[i] = float.Parse(normal[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 vectors.Add(vector);
             }
@@ -119,7 +120,7 @@ public class Mesh {
                 var vt = line.Substring(3).Split(" ");
                 var vector = new Vector2();
                 for (var i = 0; i < 2; i++) {
-                    vector[i] = float.Parse(vt[i]);
+                    vector[i] = float.Parse(vt[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 texture.Add(vector);
             }
