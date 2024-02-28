@@ -26,14 +26,13 @@ public static class Model {
         var meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshRenderer.Mesh = Graphics.Mesh.Default;
         meshRenderer.Material = ErrorMat;
-        gameObject.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(180f));
         return gameObject;
     }
     
     public unsafe static GameObject FromFileSystem(string path) {
         Log.Information("Loading model from {0}", path);
         if (!Files.FileExists(path)) {
-            Log.Error("Failed to load model {0}", path);
+            Log.Error("Failed to load model {0}! it does not exist", path);
             return SpawnErrorModel();
         }
         var file = Files.GetFile(path);
@@ -43,12 +42,13 @@ public static class Model {
         Log.Verbose("Successfully read the file");
         Log.Verbose("Trying to read byte array at {pointer}, with length {lenght}", new IntPtr(&bytes), bytes.Length);
         Scene* scene;
+        //assimp.
         fixed(byte* buf = bytes)
             scene = assimp.ImportFileFromMemory(buf, (uint)bytes.Length*sizeof(byte), 0u, Path.GetExtension(path));
         var error = assimp.GetErrorStringS() ?? "";
         if (error != "") {
             Log.Error("Assimp reported an error: "+error);
-            throw new Exception("Could not load the model!");
+            return SpawnErrorModel();
         }
 
         Log.Debug("AssImp Successfully imported the model");

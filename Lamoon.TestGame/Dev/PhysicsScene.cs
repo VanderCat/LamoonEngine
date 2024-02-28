@@ -37,7 +37,7 @@ public class PhysicsScene : IScene {
         testFloor.AddComponent<MeshRenderer>().Mesh = Mesh.Quad;
         testFloor.Transform.LocalScale = Vector3.One * 10;
 
-        var model = Model.SpawnErrorModel();
+        var model = Engine.Model.SpawnErrorModel();
         model.Transform.LocalPosition = Vector3.UnitY * 5;
         var rb = model.AddComponent<Rigidbody>();
         var shape = model.AddComponent<BoxCollision>();

@@ -14,6 +14,8 @@ public static class Extensions {
             ogl.Add(vertex.Normal.X);
             ogl.Add(vertex.Normal.Y);
             ogl.Add(vertex.Normal.Z);
+            ogl.Add(vertex.LightmapCoords.X);
+            ogl.Add(vertex.LightmapCoords.Y);
         }
 
         return ogl.ToArray();

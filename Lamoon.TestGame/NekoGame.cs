@@ -26,6 +26,8 @@ public class NekoGame : Game {
         base.Load();
         var WorkFolder = new FolderFilesystem("Data");
         WorkFolder.Mount();
+        var GameFolder = new FolderFilesystem("./");
+        GameFolder.Mount();
         //var mod = new FolderFilesystem("Mods/TestMod");
         //mod.Mount();
         InputContext = View.CreateInput();

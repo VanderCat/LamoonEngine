@@ -16,10 +16,10 @@ public class Mesh {
     public uint[] Indices;
     
     public static readonly Mesh Quad = new (new[] {
-            1f, 1f, 0.0f, 1.0f, 1.0f, 0f, 0f, -1f,
-            1f, -1f, 0.0f, 1.0f, 0.0f, 0f, 0f, -1f,
-            -1f, -1f, 0.0f, 0.0f, 0.0f, 0f, 0f, -1f,
-            -1f, 1f, 0.0f, 0.0f, 1.0f, 0f, 0f, -1f
+            1f, 1f, 0.0f, 1.0f, 1.0f, 0f, 0f, -1f, 1.0f, 1.0f,
+            1f, -1f, 0.0f, 1.0f, 0.0f, 0f, 0f, -1f, 1.0f, 0.0f,
+            -1f, -1f, 0.0f, 0.0f, 0.0f, 0f, 0f, -1f, 0.0f, 0.0f,
+            -1f, 1f, 0.0f, 0.0f, 1.0f, 0f, 0f, -1f, 0.0f, 0.0f
         },
         new[] {
             0u, 1u, 3u,
@@ -58,7 +58,7 @@ public class Mesh {
         }
 
         unsafe {
-            const uint stride = 8 * sizeof(float);
+            const uint stride = 10 * sizeof(float);
 
             // Enable the "aPosition" attribute in our vertex array, providing its size and stride too.
             const uint positionLoc = 0;
@@ -77,6 +77,12 @@ public class Mesh {
             gl.EnableVertexAttribArray(normalLoc);
             gl.VertexAttribPointer(normalLoc, 3, VertexAttribPointerType.Float, false, stride,
                 (void*)(5 * sizeof(float)));
+            
+            const uint lightmapLoc = 3;
+            gl.EnableVertexAttribArray(lightmapLoc);
+            gl.VertexAttribPointer(lightmapLoc, 2, VertexAttribPointerType.Float, false, stride,
+                (void*)(8 * sizeof(float)));
+
 
             // Unbind everything as we don't need it.
             gl.BindVertexArray(0);

@@ -66,15 +66,16 @@ public class TestScene : IScene {
         meshRenderer2.Material = material2;
         //camera.AddComponent<Rotation>();
 
-        var testModel = new GameObject();
-        testModel.AddComponent<MeshRenderer>().Mesh = Mesh.FromObjStream(Files.GetFile("Models/amy.obj").GetStream());
-        testModel.Transform.LocalScale = new Vector3(10f, 10f, 10f);
-        testModel.AddComponent<Movement>();
-        testModel.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(90));
-        var brokenModel = Model.FromFileSystem("Models/i_dont_exsist.fbx");
+        //var testModel = new GameObject();
+        //testModel.AddComponent<MeshRenderer>().Mesh = Mesh.FromObjStream(Files.GetFile("Models/amy.obj").GetStream());
+        //testModel.Transform.LocalScale = new Vector3(10f, 10f, 10f);
+        //testModel.AddComponent<Movementegl>();
+        //testModel.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(90));
+        var testModel = Engine.Model.FromFileSystem("Models/test_map.obj");
+        var brokenModel = Engine.Model.FromFileSystem("Models/i_dont_exsist.fbx");
 
         var skiaDraw = new GameObject();
-        skiaDraw.AddComponent<SkiaCanvas>();
+        //skiaDraw.AddComponent<SkiaCanvas>();
         var drawHierarcy = new GameObject();
         drawHierarcy.Transform.Parent = skiaDraw.Transform;
         drawHierarcy.AddComponent<Hierarchy>();

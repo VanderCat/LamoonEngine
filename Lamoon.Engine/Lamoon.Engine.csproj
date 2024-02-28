@@ -27,6 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\NekoLib\NekoLib\NekoLib.csproj" />
+      <ProjectReference Include="..\Lamoon.Data\Lamoon.Data.csproj" />
       <ProjectReference Include="..\Lamoon.Filesystem\Lamoon.Filesystem.csproj" />
       <ProjectReference Include="..\Lamoon.Graphics\Lamoon.Graphics.csproj" />
     </ItemGroup>

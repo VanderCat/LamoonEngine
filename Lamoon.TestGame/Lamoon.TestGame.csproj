@@ -25,4 +25,13 @@
       <PackageReference Include="Silk.NET.Input" Version="2.20.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Models\test_map.blend">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Models\test_map.obj">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
