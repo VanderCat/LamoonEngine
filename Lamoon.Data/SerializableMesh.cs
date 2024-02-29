@@ -10,4 +10,6 @@ public class SerializableMesh {
     public float[] Verticies;
     [Key(2)]
     public uint[] Indicies;
+
+    [Key(3)] public int MaterialIndex = 0;
 }

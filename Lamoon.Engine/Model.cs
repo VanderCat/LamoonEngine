@@ -20,7 +20,10 @@ namespace Lamoon.Engine;
 public static class Model {
     private static ILogger Log = Serilog.Log.Logger.ForContext("Name", "ModelLoader");
 
+    [Obsolete]
     private static Material ErrorMat = new (Texture.Missing, new Shader(UnlinkedShader.DefaultVertex, new UnlinkedShader(ShaderType.FragmentShader, Files.GetFile("Shaders/error.frag").Read())));
+    
+    [Obsolete]
     public static GameObject SpawnErrorModel() {
         var gameObject = new GameObject();
         var meshRenderer = gameObject.AddComponent<MeshRenderer>();
@@ -29,6 +32,7 @@ public static class Model {
         return gameObject;
     }
     
+    [Obsolete]
     public unsafe static GameObject FromFileSystem(string path) {
         Log.Information("Loading model from {0}", path);
         if (!Files.FileExists(path)) {
@@ -65,6 +69,14 @@ public static class Model {
         return gameObject;
     }
 
+    public static GameObject Spawn(string path) {
+        var go = new GameObject();
+        var modelRenderer = go.AddComponent<ModelRenderer>();
+        modelRenderer.RenderModel = Graphics.Model.FromFilesystem(path);
+        return go;
+    }
+
+    [Obsolete]
     private unsafe static Graphics.Mesh[] GenerataeLamoonMeshes(Scene* scene) {
         var generatedMeshes = new Graphics.Mesh[scene->MNumMeshes];
         for (int i = 0; i < scene->MNumMeshes; i++) {
@@ -99,6 +111,7 @@ public static class Model {
         return generatedMeshes;
     }
     
+    [Obsolete]
     private unsafe static GameObject AssImpRecursive(Silk.NET.Assimp.Node* node, Graphics.Mesh[] meshes, GameObject? parent = null) {
         Log.Verbose("Processing node {0}", Marshal.PtrToStringAuto(new IntPtr(node->MName.Data), (int)node->MName.Length));
         var numChildren = node->MNumChildren;
@@ -113,6 +126,7 @@ public static class Model {
         return parent;
     }
 
+    [Obsolete]
     private unsafe static void CopyMeshes(GameObject go, Graphics.Mesh[] meshes, Silk.NET.Assimp.Node* node) {
         var numMeshes = node->MNumMeshes;
         for (int i = 0; i < numMeshes; i++) {
@@ -122,7 +136,7 @@ public static class Model {
         }
     }
 
-    [Obsolete("unfinished")]
+    [Obsolete]
     public unsafe static GameObject FromGltfFileStstem(string path) {
         ModelRoot model;
         using (var bytes = Files.GetFile(path).GetStream()) {
@@ -137,6 +151,7 @@ public static class Model {
         return go;
     }
 
+    [Obsolete]
     private static GameObject CreateHirearchy(Node node, GameObject? parent) {
         parent ??= new GameObject();
         foreach (var child in node.VisualChildren) {

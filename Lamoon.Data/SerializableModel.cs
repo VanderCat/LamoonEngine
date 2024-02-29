@@ -5,7 +5,7 @@ namespace Lamoon.Data;
 [MessagePackObject]
 public class SerializableModel {
     [Key(0)] 
-    public int Version = 0;
+    public int Version = 1;
     
     [MessagePackObject]
     public class Metadata {
@@ -21,11 +21,13 @@ public class SerializableModel {
     public Metadata? MetaData;
     [Key(2)]
     public SerializableMesh[] Meshes = Array.Empty<SerializableMesh>();
+    [Key(3)]
+    public Dictionary<int, string> Material = new();
 
     // -1 is a root
-    [Key(3)]
+    [Key(4)]
     public Dictionary<int, int> Relationships = new();
 
-    [Key(4)] 
+    [Key(5)] 
     public List<SerializableModel> Children = new();
 }

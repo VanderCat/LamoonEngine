@@ -31,9 +31,16 @@
       <None Remove="Shaders\base.vert" />
       <EmbeddedResource Include="Shaders\base.vert" />
       <None Remove="Textures\_missing_texture.png" />
+      <EmbeddedResource Include="Shaders\Default.lshdr" />
+      <EmbeddedResource Include="Shaders\error.frag" />
+      <EmbeddedResource Include="Shaders\Error.lshdr" />
       <EmbeddedResource Include="Textures\_missing_texture.png" />
       <None Remove="Models\missing_model.obj" />
       <EmbeddedResource Include="Models\missing_model.obj" />
+      <None Remove="Models\missing_model.lmdlc" />
+      <EmbeddedResource Include="Models\missing_model.lmdlc" />
+      <None Remove="Materials\Engine\missing_model.lmat" />
+      <EmbeddedResource Include="Materials\Engine\missing_model.lmat" />
     </ItemGroup>
 
     <ItemGroup>

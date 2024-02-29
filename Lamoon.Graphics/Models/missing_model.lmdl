@@ -1,0 +1,8 @@
+info:
+  author: VanderCat
+  name: Missing Model
+  description: a model that indicate the given model is missing
+meshList:
+  - missing_model.obj
+materials:
+  - Materials/Engine/missing_model

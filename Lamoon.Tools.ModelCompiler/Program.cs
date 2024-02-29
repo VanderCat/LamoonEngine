@@ -51,7 +51,7 @@ public static class Program {
         var model = BuildModel(md, basepath);
 
         var lz4Options = MessagePackSerializerOptions.Standard.WithCompression(MessagePackCompression.Lz4BlockArray);
-        var serializedModel = MessagePackSerializer.Serialize(lz4Options);
+        var serializedModel = MessagePackSerializer.Serialize(model, lz4Options);
         
         var output = opts.Output ?? Path.Join(basepath, Path.GetFileNameWithoutExtension(opts.InputFile) + ".lmdlc");
         Log.Information("Saving model to {output}", output);
@@ -60,13 +60,13 @@ public static class Program {
 
     private static Assimp AssImpAPI;
 
-    private static Model.Metadata OpenModel(string path) {
+    private static ModelDefinition OpenModel(string path) {
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
-        Model.Metadata md;
+        ModelDefinition md;
         try {
-            md = deserializer.Deserialize<Model.Metadata>(File.ReadAllText(path));
+            md = deserializer.Deserialize<ModelDefinition>(File.ReadAllText(path));
         }
         catch (FileNotFoundException e) {
             Log.Error("Could not find the model at {path}!", Path.GetFullPath(path));
@@ -86,7 +86,7 @@ public static class Program {
         Log.Verbose("Loaded AssImp "+AssImpAPI.GetVersionMajor()+" "+AssImpAPI.GetVersionMinor());
     }
 
-    private unsafe static SerializableModel GetPartialModel(string path, string basepath) {
+    private unsafe static SerializableModel GetPartialModel(string path, string basepath, ModelDefinition mdl) {
         var fullpath = Path.Join(basepath, path);
         Log.Debug("Processing mesh {mesh}", path);
         if (!File.Exists(fullpath)) {
@@ -122,6 +122,23 @@ public static class Program {
         };
         AssImpRecursive(rNode, model);
 
+       Log.Debug("Parsing materials");
+        for (int i = 0; i < scene->MNumMaterials; i++) {
+            var mat = scene->MMaterials[i];
+            var assimpString = new AssimpString();
+            AssImpAPI.GetMaterialString(mat, Assimp.MaterialName, 0, 0, ref assimpString );
+            var name = assimpString.AsString;
+            model.Material[i] = name;
+            Log.Verbose("found material {0}", name);
+            if (model.Material[i] == "" && mdl.Materials is not null && mdl.Materials.Count > 0) model.Material[i] = mdl.Materials[0];
+            Log.Verbose("using material {0}", model.Material[i]);
+            if (mdl.MaterialRedefinition is null) continue;
+            Log.Verbose("Overriding material");
+            if (mdl.MaterialRedefinition.TryGetValue(name, out var value))
+                model.Material[i] =(mdl.Materials is null)?name : mdl.Materials[value];
+            Log.Verbose("Material {name} is set to {material}", name, model.Material[i]);
+        }
+
         return model;
     }
     
@@ -135,6 +152,9 @@ public static class Program {
                 Log.Warning("It seems mesh {mesh} have more than 1 UV. This is currently unsupported, and other UVs will be ignored.",
                     mesh->MName.AsString);
             }
+
+            var materialIndex = mesh->MMaterialIndex;
+
             for (int j = 0; j < mesh->MNumVertices; j++) {
                 var vert = new Vertex {
                     Position = mesh->MVertices[j],
@@ -158,7 +178,8 @@ public static class Program {
             generatedMeshes[i] = new SerializableMesh {
                 Name = mesh->MName.AsString,
                 Verticies = verticies.BuildVerticies(),
-                Indicies = indexes.ToArray()
+                Indicies = indexes.ToArray(),
+                MaterialIndex = (int)materialIndex
             };
         }
 
@@ -179,11 +200,11 @@ public static class Program {
         return parent;
     }
 
-    public static SerializableModel BuildModel(Model.Metadata md, string basepath) {
+    public static SerializableModel BuildModel(ModelDefinition md, string basepath) {
         var model = new SerializableModel();
         if (md.MeshList is not null) {
             foreach (var meshPath in md.MeshList) {
-                var partialModel = GetPartialModel(meshPath, basepath);
+                var partialModel = GetPartialModel(meshPath, basepath, md);
                 model.Children.Add(partialModel);
             }
         }

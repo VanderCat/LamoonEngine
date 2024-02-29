@@ -5,6 +5,7 @@ using NekoLib.Core;
 using NekoLib.Scenes;
 using Lamoon.Engine;
 using Lamoon.Filesystem;
+using Model = Lamoon.Engine.Model;
 using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.TestGame.Dev; 
@@ -58,12 +59,12 @@ public class TestScene : IScene {
         cameraComponent.OrthoScale = 0.001f;
         cameraComponent.Orthographic = false;
         
-        var testMesh2 = new GameObject();
+        /*var testMesh2 = new GameObject();
         testMesh2.Name = "TestMesh";
         var material2 = new Material(Texture.FromFilesystem("Materials/test.png"), Shader.Default);
         var meshRenderer2 = testMesh2.AddComponent<MeshRenderer>();
         meshRenderer2.Mesh = mesh;
-        meshRenderer2.Material = material2;
+        meshRenderer2.Material = material2;*/
         //camera.AddComponent<Rotation>();
 
         //var testModel = new GameObject();
@@ -71,12 +72,15 @@ public class TestScene : IScene {
         //testModel.Transform.LocalScale = new Vector3(10f, 10f, 10f);
         //testModel.AddComponent<Movementegl>();
         //testModel.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(90));
-        var testModel = Engine.Model.FromFileSystem("Models/test_map.obj");
+        /*var testModel = Engine.Model.FromFileSystem("Models/test_map.obj");
         testModel.GetComponentInChildren<MeshRenderer>().Material = new Material(Texture.FromFilesystem("Materials/test.png"), Shader.Default);
-        var brokenModel = Engine.Model.FromFileSystem("Models/i_dont_exsist.fbx");
+        var brokenModel = Engine.Model.FromFileSystem("Models/i_dont_exsist.fbx");*/
+
+        var antherModel = Model.Spawn("test");
+        antherModel.AddComponent<Rotation>();
 
         var skiaDraw = new GameObject();
-        //skiaDraw.AddComponent<SkiaCanvas>();
+        skiaDraw.AddComponent<SkiaCanvas>();
         var drawHierarcy = new GameObject();
         drawHierarcy.Transform.Parent = skiaDraw.Transform;
         drawHierarcy.AddComponent<Hierarchy>();
