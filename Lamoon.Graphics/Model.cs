@@ -64,7 +64,7 @@ public class Model {
         //FIXME: support for nested models or smth idk, this is a hack ultimately
         foreach (var mesh in model.Children[0].Meshes) {
             var tm = new TransformedMesh(mesh.Verticies, mesh.Indicies);
-            tm.LocalMatrix = mesh.Transform;
+            //tm.LocalMatrix = mesh.Transform;
             realModel.AllMeshes.Add(tm);
         }
 

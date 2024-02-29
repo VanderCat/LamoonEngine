@@ -13,5 +13,5 @@ public class SerializableMesh {
     public uint[] Indicies;
 
     [Key(3)] public int MaterialIndex = 0;
-    [Key(4)] public Matrix4x4 Transform;
+    //[Key(4)] public Matrix4x4 Transform; // TODO: fix
 }
