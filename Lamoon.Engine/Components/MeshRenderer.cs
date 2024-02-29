@@ -34,7 +34,8 @@ public class MeshRenderer : Behaviour {
         catch (ArgumentException e) { }
 
         Immedieate.UseShader(shader);
-        Immedieate.BindTexture(Material.Textures[0]);
+        if (Material.Textures.Count > 0)
+            Immedieate.BindTexture(Material.Textures[0]);
         
         //gl.PolygonMode(TriangleFace.FrontAndBack, PolygonMode.Line);
         gl.DrawElements(Mesh.PrimitiveType, (uint)Mesh.Indices.Length, DrawElementsType.UnsignedInt, (void*) 0);

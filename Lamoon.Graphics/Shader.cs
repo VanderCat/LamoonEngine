@@ -1,5 +1,7 @@
 using System.Numerics;
 using System.Reflection;
+using Lamoon.Data;
+using Lamoon.Filesystem;
 using Serilog;
 using Silk.NET.OpenGL;
 
@@ -122,5 +124,48 @@ public class Shader {
             }
 
         return UniformCache[name] != -1;
+    }
+
+    public static Shader FromDefinition(ShaderDefinition shaderDefinition) {
+        var vertexPath = shaderDefinition.Vertex is null || !Files.FileExists(shaderDefinition.Vertex)
+            ? "Shaders/base.vert"
+            : shaderDefinition.Vertex;
+        
+        var vertexCode = Files.GetFile(vertexPath).Read();
+        using var vertex = new UnlinkedShader(ShaderType.VertexShader, vertexCode);
+        
+        var fragmentPath = shaderDefinition.Fragment is null || !Files.FileExists(shaderDefinition.Fragment)
+            ? "Shaders/base.vert"
+            : shaderDefinition.Fragment;
+        
+        var fragmentCode = Files.GetFile(fragmentPath).Read();
+        using var fragment = new UnlinkedShader(ShaderType.FragmentShader, fragmentCode);
+        
+        if (shaderDefinition.Compute is not null) {
+            Log.Warning("{Name} shaders are not supported yet!", nameof(shaderDefinition.Compute));
+        }
+        if (shaderDefinition.Geometry is not null) {
+            Log.Warning("{Name} shaders are not supported yet!", nameof(shaderDefinition.Geometry));
+        }
+        if (shaderDefinition.Tesselation is not null) {
+            Log.Warning("{Name} shaders are not supported yet!", nameof(shaderDefinition.Tesselation));
+        }
+        
+        return new Shader(vertex, fragment);
+    }
+
+    public static Shader FromFilesystem(string path) {
+        if (!path.EndsWith(".lshdr")) path += ".lshdr";
+        ShaderDefinition definition;
+        if (Files.FileExists(path)) {
+            using var stream = Files.GetFile(path).GetStream();
+            definition = Definition.FromStream<ShaderDefinition>(stream);
+        }
+        else {
+            Log.Error("{Shader} does not exist!", path);
+            definition = new ShaderDefinition();
+        }
+
+        return FromDefinition(definition);
     }
 }

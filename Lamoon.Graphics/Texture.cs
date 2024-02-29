@@ -163,7 +163,7 @@ public class Texture : IDisposable {
         }
     }
     
-    public static Texture FromFileSystem(string path) {
+    public static Texture FromFilesystem(string path) {
         try {
             using var stream = Files.GetFile(path).GetStream();
             return FromStream(stream);

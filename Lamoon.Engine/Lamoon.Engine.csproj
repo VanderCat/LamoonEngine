@@ -33,12 +33,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Copy Update="Shaders\error.frag" SourceFiles="Shaders\error.frag" DestinationFiles="Data\Shaders\error.frag"/>
+        <Copy Update="Shaders\error.frag" SourceFiles="Shaders\error.frag" DestinationFiles="Data\Shaders\error.frag" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Shaders\error.frag" />
       <EmbeddedResource Include="Shaders\error.frag" />
+      <None Remove="Shaders\Default.lshdr" />
+      <EmbeddedResource Include="Shaders\Default.lshdr" />
+      <None Remove="Shaders\Error.lshdr" />
+      <EmbeddedResource Include="Shaders\Error.lshdr" />
     </ItemGroup>
 
 </Project>

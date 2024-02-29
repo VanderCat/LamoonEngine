@@ -1,0 +1,4 @@
+type: glsl
+
+fragment: Shaders/base.frag
+vertex: Shaders/base.vert

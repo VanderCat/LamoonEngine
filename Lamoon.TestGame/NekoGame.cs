@@ -24,10 +24,10 @@ public class NekoGame : Game {
 
     public override void Load() {
         base.Load();
-        var WorkFolder = new FolderFilesystem("Data");
-        WorkFolder.Mount();
         var GameFolder = new FolderFilesystem("./");
         GameFolder.Mount();
+        var WorkFolder = new FolderFilesystem("Data");
+        WorkFolder.Mount();
         //var mod = new FolderFilesystem("Mods/TestMod");
         //mod.Mount();
         InputContext = View.CreateInput();

@@ -51,7 +51,7 @@ public class AssemblyFilesystem : IMountable {
 
     public bool FileExists(string path) {
         var assemblyPath = TransfromPath(path);
-        Log.Verbose(assemblyPath);
+        //Log.Verbose(assemblyPath);
         using var stream = Assembly.GetManifestResourceStream(assemblyPath);
         return stream is not null;
     }

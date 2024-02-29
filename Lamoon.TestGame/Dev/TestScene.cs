@@ -37,7 +37,7 @@ public class TestScene : IScene {
         var testMesh = new GameObject();
         testMesh.Name = "TestMesh";
         var mesh  = Mesh.Quad;
-        var material = new Material(Texture.FromFileSystem("Textures/test1.png"), Shader.Default);
+        var material = Material.FromFilesystem("Materials/dev_01.lmat");
         var meshRenderer = testMesh.AddComponent<MeshRenderer>();
         meshRenderer.Mesh = mesh;
         meshRenderer.Material = material;
@@ -60,7 +60,7 @@ public class TestScene : IScene {
         
         var testMesh2 = new GameObject();
         testMesh2.Name = "TestMesh";
-        var material2 = new Material(Texture.FromFileSystem("Textures/test.png"), Shader.Default);
+        var material2 = new Material(Texture.FromFilesystem("Materials/test.png"), Shader.Default);
         var meshRenderer2 = testMesh2.AddComponent<MeshRenderer>();
         meshRenderer2.Mesh = mesh;
         meshRenderer2.Material = material2;
@@ -72,6 +72,7 @@ public class TestScene : IScene {
         //testModel.AddComponent<Movementegl>();
         //testModel.Transform.LocalRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, float.DegreesToRadians(90));
         var testModel = Engine.Model.FromFileSystem("Models/test_map.obj");
+        testModel.GetComponentInChildren<MeshRenderer>().Material = new Material(Texture.FromFilesystem("Materials/test.png"), Shader.Default);
         var brokenModel = Engine.Model.FromFileSystem("Models/i_dont_exsist.fbx");
 
         var skiaDraw = new GameObject();

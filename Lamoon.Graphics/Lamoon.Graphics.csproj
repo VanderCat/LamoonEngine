@@ -37,6 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Lamoon.Data\Lamoon.Data.csproj" />
       <ProjectReference Include="..\Lamoon.Filesystem\Lamoon.Filesystem.csproj" />
     </ItemGroup>
 

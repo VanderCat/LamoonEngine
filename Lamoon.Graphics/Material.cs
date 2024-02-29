@@ -1,6 +1,9 @@
 using System.Drawing;
 using System.Numerics;
 using System.Reflection;
+using Lamoon.Data;
+using Lamoon.Filesystem;
+using Serilog;
 
 namespace Lamoon.Graphics; 
 
@@ -48,5 +51,34 @@ public class Material {
         UnformValues[name] = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public Material(Shader shader) : this(null, shader) { }
+    public Material(Shader shader) {
+        Textures = new List<Texture>();
+        _shader = shader;
+    }
+
+    public static Material FromDefinition(MaterialDefinition materialDefinition) {
+        var shader = Shader.FromFilesystem(materialDefinition.Shader);
+        var material = new Material(shader);
+        if (materialDefinition.Textures is not null)
+            foreach (var texturePath in materialDefinition.Textures) {
+                material.Textures.Add(Texture.FromFilesystem(texturePath));
+            }
+        
+        return material;
+    }
+
+    public static Material FromFilesystem(string path) {
+        if (!path.EndsWith(".lmat")) path += ".lmat";
+        MaterialDefinition definition;
+        if (Files.FileExists(path)) {
+            using var stream = Files.GetFile(path).GetStream();
+            definition = Definition.FromStream<MaterialDefinition>(stream);
+        }
+        else {
+            Log.Error("{Material} does not exist!", path);
+            return Default;
+        }
+
+        return FromDefinition(definition);
+    }
 }

@@ -14,6 +14,7 @@ using Lamoon.Graphics.Skia;
 using NekoLib.Scenes;
 using Silk.NET.GLFW;
 using Silk.NET.Windowing.Glfw;
+using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.Engine;
 
@@ -89,6 +90,9 @@ public class Game {
     }
 
     public virtual void Load() {
+        var assemblyGraphicsFs = new AssemblyFilesystem(typeof(Texture).Assembly);
+        assemblyGraphicsFs.Mount();
+        
         var assemblyFs = new AssemblyFilesystem(Assembly.GetExecutingAssembly());
         assemblyFs.Mount();
 
