@@ -18,7 +18,7 @@ public class ModelRenderer : Behaviour {
             gl.BindVertexArray(mesh.VaoHandle);
             gl.BindBuffer(GLEnum.ArrayBuffer, mesh.VboHandle);
             var material = MaterialOverride??model.Materials[mesh.MaterialIndex];
-            material.SetUniform("transform", Transform.GlobalMatrix);
+            material.SetUniform("transform", mesh.GlobalMatrix*Transform.GlobalMatrix);
             material.SetUniform("view", Camera.CurrentlyDrawing.ViewMatrix);
             material.SetUniform("projection", Camera.CurrentlyDrawing.ProjectionMatrix);
             try {

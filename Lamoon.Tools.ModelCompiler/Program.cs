@@ -101,6 +101,7 @@ public static class Program {
             Log.Verbose("Trying to read byte array at {pointer}, with length {lenght}", new IntPtr(buf),
                 bytes.Length);
             scene = AssImpAPI.ImportFileFromMemory(buf, (uint)bytes.Length * sizeof(byte), 0u, Path.GetExtension(path));
+            AssImpAPI.ApplyPostProcessing(scene, (uint)PostProcessSteps.Triangulate);
         }
 
         var error = AssImpAPI.GetErrorStringS() ?? "";
@@ -126,11 +127,11 @@ public static class Program {
         for (int i = 0; i < scene->MNumMaterials; i++) {
             var mat = scene->MMaterials[i];
             var assimpString = new AssimpString();
-            AssImpAPI.GetMaterialString(mat, Assimp.MaterialName, 0, 0, ref assimpString );
+            AssImpAPI.GetMaterialString(mat, "?mat.name", 0, 0, ref assimpString );
             var name = assimpString.AsString;
             model.Material[i] = name;
             Log.Verbose("found material {0}", name);
-            if (model.Material[i] == "" && mdl.Materials is not null && mdl.Materials.Count > 0) model.Material[i] = mdl.Materials[0];
+            if (model.Material[i] == "DefaultMaterial" && mdl.Materials is not null && mdl.Materials.Count > 0) model.Material[i] = mdl.Materials[0];
             Log.Verbose("using material {0}", model.Material[i]);
             if (mdl.MaterialRedefinition is null) continue;
             Log.Verbose("Overriding material");
@@ -178,8 +179,7 @@ public static class Program {
             generatedMeshes[i] = new SerializableMesh {
                 Name = mesh->MName.AsString,
                 Verticies = verticies.BuildVerticies(),
-                Indicies = indexes.ToArray(),
-                MaterialIndex = (int)materialIndex
+                Indicies = indexes.ToArray()
             };
         }
 

@@ -5,7 +5,7 @@ namespace Lamoon.Data;
 [MessagePackObject]
 public class SerializableModel {
     [Key(0)] 
-    public int Version = 1;
+    public int Version = 2;
     
     [MessagePackObject]
     public class Metadata {

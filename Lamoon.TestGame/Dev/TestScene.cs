@@ -78,9 +78,12 @@ public class TestScene : IScene {
 
         var antherModel = Model.Spawn("test");
         antherModel.AddComponent<Rotation>();
+        
+        var mapModel = Model.Spawn("Models/test_map2");
+        mapModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
 
         var skiaDraw = new GameObject();
-        skiaDraw.AddComponent<SkiaCanvas>();
+        //skiaDraw.AddComponent<SkiaCanvas>();
         var drawHierarcy = new GameObject();
         drawHierarcy.Transform.Parent = skiaDraw.Transform;
         drawHierarcy.AddComponent<Hierarchy>();

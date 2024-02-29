@@ -34,7 +34,7 @@ public class Model {
             }
         }
 
-        public Matrix4x4 LocalMatrix;
+        public Matrix4x4 LocalMatrix = Matrix4x4.Identity;
         public Matrix4x4 GlobalMatrix => Parent?.GlobalMatrix ?? Matrix4x4.Identity * LocalMatrix;
 
         public TransformedMesh(float[] vertices, uint[] indices, PrimitiveType type = PrimitiveType.Triangles) : base(vertices, indices, type) { }
@@ -53,7 +53,7 @@ public class Model {
         }
     }
 
-    public const int Version = 1;
+    public const int Version = 2;
 
     public static Model FromSerialized(SerializableModel model) {
         var realModel = new Model();
@@ -63,7 +63,9 @@ public class Model {
 
         //FIXME: support for nested models or smth idk, this is a hack ultimately
         foreach (var mesh in model.Children[0].Meshes) {
-            realModel.AllMeshes.Add(new TransformedMesh(mesh.Verticies, mesh.Indicies));
+            var tm = new TransformedMesh(mesh.Verticies, mesh.Indicies);
+            tm.LocalMatrix = mesh.Transform;
+            realModel.AllMeshes.Add(tm);
         }
 
         foreach (var pair in model.Children[0].Relationships) {

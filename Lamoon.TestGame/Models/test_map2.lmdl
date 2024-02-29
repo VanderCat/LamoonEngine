@@ -1,0 +1,11 @@
+info:
+  author: VanderCat
+meshList:
+  - test_map2.fbx
+materials:
+  - Materials/dev_01
+  - Materials/dev_02
+materialRedefinition:
+  DefaultMaterial: 0
+  "materials/dev/reflectivity_90.vmat": 0
+  "materials/dev/reflectivity_50b.vmat": 1
