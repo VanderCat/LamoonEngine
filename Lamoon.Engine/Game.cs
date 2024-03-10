@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Lamoon.Engine.Console;
 using Lamoon.Filesystem;
 using Serilog;
 using Serilog.Events;
@@ -117,6 +118,7 @@ public class Game {
             View,
             InputContext
         );
+       Console.Console.RegisterType<DefaultConsoleCommands>();
         unsafe {
             gl.DebugMessageCallback(
                 (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {

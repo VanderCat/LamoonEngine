@@ -29,6 +29,7 @@ public class TestScene : IScene {
         //sceneWindow.AddComponent<DrawSceneOffScreen>();
         sceneWindow.AddComponent<ImguiInspect>();
         sceneWindow.AddComponent<ImguiSceneViewer>();
+        sceneWindow.AddComponent<ImguiConsole>();
         /*var a = new GameObject();
         a.AddComponent<TestComponent>();
         a.AddComponent<Movement>();
