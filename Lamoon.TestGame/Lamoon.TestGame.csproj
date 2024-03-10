@@ -19,10 +19,12 @@
     <ItemGroup>
       <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
       <ProjectReference Include="..\Lamoon.Physics\Lamoon.Physics.csproj" />
+      <ProjectReference Include="..\Lamoon.Tools\Lamoon.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Silk.NET.Input" Version="2.20.0" />
+      <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.20.0" />
     </ItemGroup>
 
     <ItemGroup>

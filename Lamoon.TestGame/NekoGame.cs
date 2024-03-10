@@ -6,6 +6,7 @@ using NekoLib.Scenes;
 using Serilog;
 using Silk.NET.Input;
 using Silk.NET.OpenGL;
+using Silk.NET.OpenGL.Extensions.ImGui;
 using Shader = Lamoon.Graphics.Shader;
 using Texture = Lamoon.Graphics.Texture;
 
@@ -20,8 +21,6 @@ public class NekoGame : Game {
         }
     }
 
-    public IInputContext InputContext;
-
     public override void Load() {
         base.Load();
         var GameFolder = new FolderFilesystem("./");
@@ -30,7 +29,7 @@ public class NekoGame : Game {
         WorkFolder.Mount();
         //var mod = new FolderFilesystem("Mods/TestMod");
         //mod.Mount();
-        InputContext = View.CreateInput();
+
         SceneManager.LoadScene(new TestScene());
     }
 }

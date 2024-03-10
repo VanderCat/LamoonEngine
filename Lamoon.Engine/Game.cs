@@ -13,6 +13,8 @@ using Lamoon.Graphics;
 using Lamoon.Graphics.Skia;
 using NekoLib.Scenes;
 using Silk.NET.GLFW;
+using Silk.NET.Input;
+using Silk.NET.OpenGL.Extensions.ImGui;
 using Silk.NET.Windowing.Glfw;
 using Texture = Lamoon.Graphics.Texture;
 
@@ -21,6 +23,7 @@ namespace Lamoon.Engine;
 public class Game {
     protected static Game? _instance;
     private Stopwatch sw;
+    public IInputContext InputContext;
 
     public static Game Instance {
         get {
@@ -85,10 +88,13 @@ public class Game {
     }
     
     public virtual void Draw(double deltaTime) {
+        ImguiController.Update((float) deltaTime);
         Immedieate.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         SceneManager.Draw();
+        ImguiController.Render();
     }
 
+    public ImGuiController ImguiController;
     public virtual void Load() {
         var assemblyGraphicsFs = new AssemblyFilesystem(typeof(Texture).Assembly);
         assemblyGraphicsFs.Mount();
@@ -102,9 +108,15 @@ public class Game {
 
         GraphicsReferences.OpenGl = gl;
         GraphicsReferences.ScreenSize = new Size(View.FramebufferSize.X, View.FramebufferSize.Y);
+        InputContext = View.CreateInput();
         #if DEBUG
         gl.Enable( EnableCap.DebugOutput );
         _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
+        ImguiController = new ImGuiController(
+            gl,
+            View,
+            InputContext
+        );
         unsafe {
             gl.DebugMessageCallback(
                 (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {
@@ -116,8 +128,9 @@ public class Game {
                         DebugSeverity.DebugSeverityLow => LogEventLevel.Information,
                         _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
                     };
+                    if (logLevel == LogEventLevel.Verbose  || logLevel == LogEventLevel.Debug)
+                        return; // this is too spammy when using IMGUI on nvidia card
                     _openGlLogger.Write(logLevel, Marshal.PtrToStringAnsi(message)+"\n"+new StackTrace(1));
-                    //throw new Exception(Marshal.PtrToStringAnsi(message));
                 },
                 null);
         }
