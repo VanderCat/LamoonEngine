@@ -2,6 +2,8 @@ using Lamoon.Engine;
 using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using Lamoon.TestGame.Dev;
+using Lamoon.Tools;
+using NekoLib.Core;
 using NekoLib.Scenes;
 using Serilog;
 using Silk.NET.Input;
@@ -30,6 +32,18 @@ public class NekoGame : Game {
         //var mod = new FolderFilesystem("Mods/TestMod");
         //mod.Mount();
 
+        var tools = true; //todo: make it program arg
+        SceneManager.LoadScene(new PersistantScene());
+        if (tools) LoadTools();
         SceneManager.LoadScene(new TestScene());
+    }
+
+    public void LoadTools() {
+        var tools = new GameObject("EngineTools");
+        //sceneWindow.AddComponent<DrawSceneOffScreen>();
+        tools.AddComponent<ImguiInspect>();
+        tools.AddComponent<ImguiSceneViewer>();
+        tools.AddComponent<ImguiConsole>();
+        tools.Initialize();
     }
 }

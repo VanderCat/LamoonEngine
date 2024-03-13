@@ -25,11 +25,6 @@ public class TestScene : IScene {
     public List<GameObject> GameObjects => _gameObjects;
     public void Initialize() {
         //SetupSeparateRendering();
-        var sceneWindow = new GameObject();
-        //sceneWindow.AddComponent<DrawSceneOffScreen>();
-        sceneWindow.AddComponent<ImguiInspect>();
-        sceneWindow.AddComponent<ImguiSceneViewer>();
-        sceneWindow.AddComponent<ImguiConsole>();
         /*var a = new GameObject();
         a.AddComponent<TestComponent>();
         a.AddComponent<Movement>();
@@ -95,9 +90,9 @@ public class TestScene : IScene {
         //mapModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
         //mapModel.GetComponent<ModelRenderer>().MaterialOverride = Material.FromFilesystem("Materials/dev_01");
         
-        var charModel = Model.Spawn("Models/character_soldier");
+        var charModel = Model.Spawn("Models/idk");
         charModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
-        charModel.GetComponent<ModelRenderer>().MaterialOverride = Material.FromFilesystem("Materials/dev_01");
+        //charModel.GetComponent<ModelRenderer>().MaterialOverride = Material.FromFilesystem("Materials/dev_01");
 
         var skiaDraw = new GameObject();
         //skiaDraw.AddComponent<SkiaCanvas>();

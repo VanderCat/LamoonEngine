@@ -15,8 +15,13 @@ public class ComponentInspector : Inspector {
                 ImGui.InputFloat3(field.Name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(Vector2)) {
-                var vec = (Vector2)field.GetValue(Target);
+                var vec = (Vector2) field.GetValue(Target);
                 ImGui.InputFloat2(field.Name, ref vec);
+                field.SetValue(Target, vec);
+            }
+            else if (field.FieldType == typeof(bool)) {
+                var vec = (bool)field.GetValue(Target);
+                ImGui.Checkbox(field.Name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(float)) {
                 var vec = (float)field.GetValue(Target);
@@ -50,6 +55,10 @@ public class ComponentInspector : Inspector {
             if (field.PropertyType == typeof(Vector3)) {
                 var vec = (Vector3) value;
                 ImGui.InputFloat3(field.Name, ref vec);
+                value = vec; 
+            } else if (field.PropertyType == typeof(bool)) {
+                var vec = (bool) value;
+                ImGui.Checkbox(field.Name, ref vec);
                 value = vec;
             } else if (field.PropertyType == typeof(Vector2)) {
                 var vec = (Vector2)value;

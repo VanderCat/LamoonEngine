@@ -13,4 +13,5 @@ public class ModelDefinition {
     public List<string>? PhysicsMeshList;
     public List<string>? Materials;
     public Dictionary<string, int>? MaterialRedefinition;
+    public float Scale = 1f;
 }

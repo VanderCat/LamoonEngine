@@ -110,15 +110,15 @@ public class Game {
         GraphicsReferences.OpenGl = gl;
         GraphicsReferences.ScreenSize = new Size(View.FramebufferSize.X, View.FramebufferSize.Y);
         InputContext = View.CreateInput();
-        #if DEBUG
-        gl.Enable( EnableCap.DebugOutput );
-        _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
         ImguiController = new ImGuiController(
             gl,
             View,
             InputContext
         );
-       Console.Console.RegisterType<DefaultConsoleCommands>();
+        Console.Console.RegisterType<DefaultConsoleCommands>();
+        #if DEBUG
+        gl.Enable( EnableCap.DebugOutput );
+        _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
         unsafe {
             gl.DebugMessageCallback(
                 (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {
