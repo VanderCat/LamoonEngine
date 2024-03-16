@@ -40,7 +40,7 @@ public class TestScene : IScene {
         var camera = new GameObject();
         camera.Name = "Camera";
         var cameraComponent = camera.AddComponent<Camera>();
-        
+        cameraComponent.IsMain = true;
 
         var testMesh = new GameObject();
         testMesh.Name = "TestMesh";

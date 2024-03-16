@@ -54,6 +54,8 @@ public class Game {
     public IWindow Window;
     public IView View;
     
+    public static bool IsToolsOpened;
+    
     public void InitializeWindow() {
         Glfw.GetApi().WindowHint(WindowHintBool.OpenGLDebugContext, true);
         Glfw.GetApi().WindowHint(WindowHintContextApi.ContextCreationApi, ContextApi.EglContextApi);

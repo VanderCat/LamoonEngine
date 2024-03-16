@@ -9,17 +9,26 @@ public class ImguiToolsController : Behaviour {
     private ImguiInspect _inspect;
     private ImguiSceneViewer _sceneViewer;
     private ImguiConsole _imguiConsole;
-    private GameObject other;
+    private ImguiToolsView _imguiView;
+    private ImguiGameView _imguiGameView;
+    private GameObject _other;
+    private GameObject _viewGo;
 
     public IInputContext InputContext; //TODO: use global context;
     
     void Awake() {
-        other = new GameObject("AllTools");
-        other.Transform.Parent = Transform;
+        Game.IsToolsOpened = true;
+        _other = new GameObject("AllTools");
+        _viewGo = new GameObject("DevCamera");
+        _other.Transform.Parent = Transform;
+        _viewGo.Transform.Parent = _other.Transform;
         //GameObject.AddComponent<DrawSceneOffScreen>();
-        _inspect = other.AddComponent<ImguiInspect>();
-        _sceneViewer = other.AddComponent<ImguiSceneViewer>();
-        _imguiConsole = other.AddComponent<ImguiConsole>();
+        _inspect = _other.AddComponent<ImguiInspect>();
+        _sceneViewer = _other.AddComponent<ImguiSceneViewer>();
+        _imguiConsole = _other.AddComponent<ImguiConsole>();
+        _imguiGameView = _other.AddComponent<ImguiGameView>();
+        _imguiView = _viewGo.AddComponent<ImguiToolsView>();
+        
         var io = ImGui.GetIO();
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
         InputContext.Keyboards[0].KeyDown += (keyboard, key, arg3) => {
@@ -28,6 +37,8 @@ public class ImguiToolsController : Behaviour {
         _inspect.Invoke("Awake");
         _sceneViewer.Invoke("Awake");
         _imguiConsole.Invoke("Awake");
+        _imguiView.Invoke("Awake");
+        _imguiGameView.Invoke("Awake");
     }
 
     void DrawGui() {
@@ -44,15 +55,18 @@ public class ImguiToolsController : Behaviour {
                 ImGui.MenuItem("Inspector", "", ref _inspect.Enabled);
                 ImGui.MenuItem("Scene Viewer", "", ref _sceneViewer.Enabled);
                 ImGui.MenuItem("Console", "", ref _imguiConsole.Enabled);
+                ImGui.MenuItem("Tools View", "", ref _viewGo.ActiveSelf);
+                ImGui.MenuItem("Game View", "", ref _imguiGameView.Enabled);
                 ImGui.EndMenu();
             }
 
             ImGui.EndMainMenuBar();
         }
-        ImGui.DockSpaceOverViewport();
+        ImGui.DockSpaceOverViewport(ImGui.GetMainViewport());
     }
     void ToggleTools() {
         Enabled = !Enabled;
-        other.Active = Enabled;
+        _other.Active = Enabled;
+        Game.IsToolsOpened = Enabled;
     }
 }

@@ -20,6 +20,7 @@ public class ControlCamera : Behaviour {
     }
     
     void Update() {
+        if (Game.IsToolsOpened) return;
         mouseDelta = newMousePosition - mousePosition;
         mousePosition = newMousePosition;
         yaw += float.DegreesToRadians(-mouseDelta.X*mouseSensetivity);

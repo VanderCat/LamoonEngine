@@ -1,3 +1,5 @@
+using System.Drawing;
+using System.Runtime.CompilerServices;
 using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using NekoLib.Core;
@@ -33,4 +35,8 @@ public static class Extensions {
 
         return null;
     }
+    
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float GetAspectRatio(this Size size) => (float)size.Width / (float)size.Height;
 }
