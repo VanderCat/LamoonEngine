@@ -32,7 +32,7 @@ public class ImguiSceneViewer : Behaviour {
     void DrawGameObjectHierarchyRootGui(IScene scene) {
         foreach (var gameObject in scene.GameObjects) {
             if (gameObject.Transform.Parent is not null) return;
-            var node = ImGui.TreeNodeEx(gameObject.Name, flags);
+            var node = ImGui.TreeNodeEx(gameObject.Name+"##"+gameObject.Id, flags);
             if (ImGui.IsItemClicked() && !ImGui.IsItemToggledOpen())
                 Inspect.SelectedObject = gameObject;
             if (node) {
@@ -43,12 +43,12 @@ public class ImguiSceneViewer : Behaviour {
     }
     
     void DrawGameObjectHierarchyGui(GameObject gameObject) {
-        foreach (var go in gameObject.Transform) {
-            var node = ImGui.TreeNodeEx(gameObject.Name, flags);
+        foreach (var transform in gameObject.Transform) {
+            var node = ImGui.TreeNodeEx(transform.GameObject.Name+"##"+transform.GameObject.Id, flags);
             if (ImGui.IsItemClicked() && !ImGui.IsItemToggledOpen())
-                Inspect.SelectedObject = gameObject;
+                Inspect.SelectedObject = transform.GameObject;
             if (node) {
-                DrawGameObjectHierarchyGui(go.GameObject);
+                DrawGameObjectHierarchyGui(transform.GameObject);
                 ImGui.TreePop();
             }
         }

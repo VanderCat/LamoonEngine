@@ -3,37 +3,40 @@ using System.Reflection;
 using ImGuiNET;
 using NekoLib;
 using NekoLib.Core;
+using Serilog;
 
 namespace Lamoon.Tools; 
 
 [CustomInspector(typeof(Component))]
 public class ComponentInspector : Inspector {
     public override void DrawGui() {
+        var target = (Component) Target;
         foreach (var field in Target.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy)) {
+            var name = field.Name + "##" + target.Id;
             if (field.FieldType == typeof(Vector3)) {
                 var vec = (Vector3)field.GetValue(Target);
-                ImGui.InputFloat3(field.Name, ref vec);
+                ImGui.InputFloat3(name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(Vector2)) {
                 var vec = (Vector2) field.GetValue(Target);
-                ImGui.InputFloat2(field.Name, ref vec);
+                ImGui.InputFloat2(name, ref vec);
                 field.SetValue(Target, vec);
             }
             else if (field.FieldType == typeof(bool)) {
                 var vec = (bool)field.GetValue(Target);
-                ImGui.Checkbox(field.Name, ref vec);
+                ImGui.Checkbox(name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(float)) {
                 var vec = (float)field.GetValue(Target);
-                ImGui.InputFloat(field.Name, ref vec);
+                ImGui.InputFloat(name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(double)) {
                 var vec = (double)field.GetValue(Target);
-                ImGui.InputDouble(field.Name, ref vec);
+                ImGui.InputDouble(name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType == typeof(int)) {
                 var vec = (int)field.GetValue(Target);
-                ImGui.InputInt(field.Name, ref vec);
+                ImGui.InputInt(name, ref vec);
                 field.SetValue(Target, vec);
             } else if (field.FieldType.IsAssignableTo(typeof(Component))) {
                 ImGui.TextDisabled(field.Name+": "+field.GetValue(Target));

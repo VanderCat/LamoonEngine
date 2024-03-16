@@ -40,10 +40,8 @@ public class NekoGame : Game {
 
     public void LoadTools() {
         var tools = new GameObject("EngineTools");
-        //sceneWindow.AddComponent<DrawSceneOffScreen>();
-        tools.AddComponent<ImguiInspect>();
-        tools.AddComponent<ImguiSceneViewer>();
-        tools.AddComponent<ImguiConsole>();
+        var t = tools.AddComponent<ImguiToolsController>();
+        t.InputContext = InputContext; //hack
         tools.Initialize();
     }
 }

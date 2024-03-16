@@ -8,6 +8,7 @@ namespace Lamoon.Tools;
 public class GameObjectInspector : Inspector {
     public override void DrawGui() {
         var target = ((GameObject) Target);
+        ImGui.TextDisabled($"ID:{target.Id}");
         ImGui.InputText("Name", ref target.Name, 256);
         ImGui.Checkbox("Enabled", ref target.ActiveSelf);
         if (ImGui.CollapsingHeader("Transform")) {
