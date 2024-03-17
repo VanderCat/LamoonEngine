@@ -90,12 +90,12 @@ public class TestScene : IScene {
         //mapModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
         //mapModel.GetComponent<ModelRenderer>().MaterialOverride = Material.FromFilesystem("Materials/dev_01");
         
-        var charModel = Model.Spawn("Models/idk");
+        var charModel = Model.Spawn("Models/character_soldier");
         charModel.Transform.LocalScale = new Vector3(0.01f, 0.01f, 0.01f);
         //charModel.GetComponent<ModelRenderer>().MaterialOverride = Material.FromFilesystem("Materials/dev_01");
 
         var skiaDraw = new GameObject();
-        //skiaDraw.AddComponent<SkiaCanvas>();
+        skiaDraw.AddComponent<SkiaCanvas>();
         var drawHierarcy = new GameObject();
         drawHierarcy.Transform.Parent = skiaDraw.Transform;
         drawHierarcy.AddComponent<Hierarchy>();

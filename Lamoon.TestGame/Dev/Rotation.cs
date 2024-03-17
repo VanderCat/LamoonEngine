@@ -4,7 +4,7 @@ using Lamoon.Engine;
 
 namespace Lamoon.TestGame.Dev; 
 
-public class Rotation : Behaviour{
+public class Rotation : Behaviour {
     void Update() {
         Transform.LocalRotation 
             = Quaternion.CreateFromAxisAngle(

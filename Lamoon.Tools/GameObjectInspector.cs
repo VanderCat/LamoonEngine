@@ -6,14 +6,20 @@ namespace Lamoon.Tools;
 
 [CustomInspector(typeof(GameObject))]
 public class GameObjectInspector : Inspector {
+
+    private Inspector? TransformInspector;
+
+    public override void Initialize() {
+        TransformInspector = GetInspectorFor(((GameObject) Target).Transform);
+    }
+
     public override void DrawGui() {
         var target = ((GameObject) Target);
         ImGui.TextDisabled($"ID:{target.Id}");
         ImGui.InputText("Name", ref target.Name, 256);
         ImGui.Checkbox("Enabled", ref target.ActiveSelf);
         if (ImGui.CollapsingHeader("Transform")) {
-            var a = GetInspectorFor(target.Transform);
-            a.DrawGui();
+            TransformInspector?.DrawGui();
         }
         foreach (var component in target.GetComponents()) {
             if (ImGui.CollapsingHeader(component.GetType().Name)) {

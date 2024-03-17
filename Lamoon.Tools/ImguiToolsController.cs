@@ -28,6 +28,7 @@ public class ImguiToolsController : Behaviour {
         _imguiConsole = _other.AddComponent<ImguiConsole>();
         _imguiGameView = _other.AddComponent<ImguiGameView>();
         _imguiView = _viewGo.AddComponent<ImguiToolsView>();
+        _imguiView.kb = InputContext.Keyboards[0];
         
         var io = ImGui.GetIO();
         io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;

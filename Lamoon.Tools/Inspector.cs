@@ -10,6 +10,10 @@ public class Inspector : Object {
         if (Target is null) return;
     }
 
+    public virtual void Initialize() {
+        
+    }
+
     public static Inspector? GetInspectorFor(object? target) {
         if (target is null) return null;
         var a = AppDomain.CurrentDomain
@@ -28,6 +32,7 @@ public class Inspector : Object {
         var instance = Activator.CreateInstance(b);
         if (instance is null) return null;
         ((Inspector) instance).Target = target;
+        ((Inspector) instance).Initialize();
         return (Inspector) instance;
     }  
 }

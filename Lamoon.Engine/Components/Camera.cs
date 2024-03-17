@@ -49,7 +49,7 @@ public class Camera : Behaviour {
     public float ZNear = 0.1f;
     public float ZFar = 1000f;
 
-    public bool _isMain = false;
+    private bool _isMain = false;
 
     public bool IsMain {
         get => _isMain;
