@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Data", "Lamoon.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Tools", "Lamoon.Tools\Lamoon.Tools.csproj", "{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Scripting.Lua", "Lamoon.Scripting.Lua\Lamoon.Scripting.Lua.csproj", "{C3EB994D-EFD5-4FC8-B108-7EBE4C82E41B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Scripting", "Lamoon.Scripting\Lamoon.Scripting.csproj", "{ACF6CAD5-BE97-4935-A69D-6C0053874AB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +64,13 @@ Global
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3EB994D-EFD5-4FC8-B108-7EBE4C82E41B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3EB994D-EFD5-4FC8-B108-7EBE4C82E41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3EB994D-EFD5-4FC8-B108-7EBE4C82E41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3EB994D-EFD5-4FC8-B108-7EBE4C82E41B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF6CAD5-BE97-4935-A69D-6C0053874AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF6CAD5-BE97-4935-A69D-6C0053874AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF6CAD5-BE97-4935-A69D-6C0053874AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF6CAD5-BE97-4935-A69D-6C0053874AB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

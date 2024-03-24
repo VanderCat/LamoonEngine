@@ -19,6 +19,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
       <ProjectReference Include="..\Lamoon.Physics\Lamoon.Physics.csproj" />
+      <ProjectReference Include="..\Lamoon.Scripting.Lua\Lamoon.Scripting.Lua.csproj" />
       <ProjectReference Include="..\Lamoon.Tools\Lamoon.Tools.csproj" />
     </ItemGroup>
 
@@ -53,6 +54,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Materials\dev_02.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Scripts\test.lua">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

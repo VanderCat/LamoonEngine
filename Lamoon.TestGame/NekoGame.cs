@@ -2,6 +2,7 @@ using Lamoon.Engine;
 using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using Lamoon.TestGame.Dev;
+using Lamoon.TestGame.ScriptingTest;
 using Lamoon.Tools;
 using NekoLib.Core;
 using NekoLib.Scenes;
@@ -35,7 +36,7 @@ public class NekoGame : Game {
         var tools = true; //todo: make it program arg
         SceneManager.LoadScene(new PersistantScene());
         if (tools) LoadTools();
-        SceneManager.LoadScene(new TestScene());
+        SceneManager.LoadScene(new ScriptScene());
     }
 
     public void LoadTools() {
