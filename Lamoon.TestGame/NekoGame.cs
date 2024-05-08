@@ -3,6 +3,7 @@ using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using Lamoon.TestGame.Dev;
 using Lamoon.Tools;
+using Lamoon.Tools.ModelViewer;
 using NekoLib.Core;
 using NekoLib.Scenes;
 using Serilog;
@@ -35,7 +36,7 @@ public class NekoGame : Game {
         var tools = true; //todo: make it program arg
         SceneManager.LoadScene(new PersistantScene());
         if (tools) LoadTools();
-        SceneManager.LoadScene(new TestScene());
+        SceneManager.LoadScene(new ModelViewerScene());
     }
 
     public void LoadTools() {

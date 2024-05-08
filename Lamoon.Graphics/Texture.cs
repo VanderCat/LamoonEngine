@@ -29,6 +29,7 @@ public class Texture : IDisposable {
     }
     
     public uint OpenGlHandle;
+    public Size Size;
 
     private TextureWrapMode _wrapModeX;
     public TextureWrapMode WrapModeX {
@@ -98,6 +99,8 @@ public class Texture : IDisposable {
 
         MinFilter = TextureMinFilter.LinearMipmapLinear;
         MagFilter = TextureMagFilter.Linear;
+
+        Size = size;
     }
     
     public Texture(
@@ -128,6 +131,8 @@ public class Texture : IDisposable {
         Bind(this);
         gl.GenerateMipmap(Type);
         Unbind(Type);
+        
+        Size = size;
     }
 
     public static Texture Missing = FromStream(Assembly.GetAssembly(typeof(Texture)).GetManifestResourceStream("Lamoon.Graphics.Textures._missing_texture.png"));

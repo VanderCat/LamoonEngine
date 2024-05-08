@@ -18,6 +18,7 @@ using Silk.NET.Input;
 using Silk.NET.OpenGL.Extensions.ImGui;
 using Silk.NET.Windowing.Glfw;
 using Texture = Lamoon.Graphics.Texture;
+using Timer = NekoLib.Core.Timer;
 
 namespace Lamoon.Engine;
 
@@ -157,6 +158,7 @@ public class Game {
             Time.FixedAccumulator -= Time.FixedDelta;
         }
         SceneManager.Update();
+        Timer.Global.Update(Time.DeltaF);
     }
 
     public virtual void FrameBufferResize(Vector2D<int> newSize) {

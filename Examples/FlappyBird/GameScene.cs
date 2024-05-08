@@ -6,7 +6,7 @@ using NekoLib.Core;
 
 namespace FlappyBird; 
 
-public class MenuScene : BirdScene {
+public class GameScene : BirdScene {
     public override void Initialize() {
         var cameraGameObject = new GameObject("Camera");
         var camera = cameraGameObject.AddComponent<Camera>();
@@ -15,7 +15,7 @@ public class MenuScene : BirdScene {
         var canvasGameObject = new GameObject("UI");
         canvasGameObject.AddComponent<SkiaCanvas>();
         
-        var testBg = new GameObject("bird");
+        var testBg = new GameObject("bg");
         testBg.Transform.Parent = canvasGameObject.Transform;
         var bgRect = testBg.AddComponent<Rect>();
         var bgImage = testBg.AddComponent<SkiaImage>();
@@ -28,6 +28,11 @@ public class MenuScene : BirdScene {
         var birdImage = testBird.AddComponent<SkiaImage>();
         birdImage.Image = Texture.FromFilesystem("Textures/bird.jpg");
         birdRect.Size = new SizeF(64f, 64f);
+        testBird.AddComponent<BirdBrains>();
+        
+        var generatorGo = new GameObject("generator");
+        var generator = generatorGo.AddComponent<ObstacleGenerator>();
+        generator.canvas = canvasGameObject;
         
         base.Initialize();
     }

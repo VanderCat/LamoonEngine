@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Data", "Lamoon.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Tools", "Lamoon.Tools\Lamoon.Tools.csproj", "{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlappyBird", "Examples\FlappyBird\FlappyBird.csproj", "{7F6E36C7-26BB-49F0-81E5-6F0A8F7FE99E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5767629D-CA4E-4358-BE9F-3C3A6A05CFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F6E36C7-26BB-49F0-81E5-6F0A8F7FE99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F6E36C7-26BB-49F0-81E5-6F0A8F7FE99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F6E36C7-26BB-49F0-81E5-6F0A8F7FE99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F6E36C7-26BB-49F0-81E5-6F0A8F7FE99E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
