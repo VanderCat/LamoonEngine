@@ -4,6 +4,7 @@ using Silk.NET.OpenGL;
 
 namespace Lamoon.Engine.Components; 
 
+[ToolsIcon(MaterialIcons.Accessibility)]
 public class ModelRenderer : Behaviour {
     public Material? MaterialOverride;
 

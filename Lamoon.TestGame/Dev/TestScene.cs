@@ -7,6 +7,7 @@ using NekoLib.Scenes;
 using Lamoon.Engine;
 using Lamoon.Filesystem;
 using Lamoon.Tools;
+using Silk.NET.GLFW;
 using Silk.NET.OpenGL;
 using Framebuffer = Lamoon.Graphics.Framebuffer;
 using Model = Lamoon.Engine.Model;
@@ -116,6 +117,8 @@ public class TestScene : IScene {
         foreach (var gameObject in GameObjects) {
             gameObject.Update();
         }
+
+        NekoGame.Instance.Window.Title = "" + 1 / Time.DeltaF;
     }
 
     private Framebuffer _fbo;

@@ -1,5 +1,6 @@
 using System.Reflection;
 using ImGuiNET;
+using Lamoon.Engine;
 using NekoLib.Core;
 
 namespace Lamoon.Tools; 
@@ -18,11 +19,13 @@ public class GameObjectInspector : Inspector {
         ImGui.TextDisabled($"ID:{target.Id}");
         ImGui.InputText("Name", ref target.Name, 256);
         ImGui.Checkbox("Enabled", ref target.ActiveSelf);
-        if (ImGui.CollapsingHeader("Transform")) {
+        if (ImGui.CollapsingHeader(MaterialIcons.Control_camera + "Transform")) {
             TransformInspector?.DrawGui();
         }
         foreach (var component in target.GetComponents()) {
-            if (ImGui.CollapsingHeader(component.GetType().Name)) {
+            var iconAttribute = (ToolsIconAttribute?)component.GetType().GetCustomAttribute(typeof(ToolsIconAttribute));
+            var icon = iconAttribute?.Icon;
+            if (ImGui.CollapsingHeader((icon??MaterialIcons.Insert_drive_file)+ component.GetType().Name+"##"+component.Id)) {
                 var a = GetInspectorFor(component); // FIXME: it will be SLOWWWW
                 a.DrawGui();
             }

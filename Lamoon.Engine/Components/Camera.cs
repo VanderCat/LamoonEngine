@@ -11,6 +11,7 @@ using Texture = Lamoon.Graphics.Texture;
 
 namespace Lamoon.Engine.Components;
 
+[ToolsIcon(MaterialIcons.Videocam)]
 public class Camera : Behaviour {
     public static Camera? CurrentlyDrawing { get; private set; }
     public static Camera? MainCamera { get; private set; }

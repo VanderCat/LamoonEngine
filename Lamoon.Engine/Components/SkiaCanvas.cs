@@ -10,6 +10,7 @@ using Shader = Lamoon.Graphics.Shader;
 
 namespace Lamoon.Engine.Components; 
 
+[ToolsIcon(MaterialIcons.Photo_size_select_large)]
 public class SkiaCanvas : Behaviour {
     private Framebuffer _fbo;
     private Renderbuffer _rbo;

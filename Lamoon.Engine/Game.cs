@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using ImGuiNET;
 using Lamoon.Engine.Console;
 using Lamoon.Filesystem;
 using Serilog;
@@ -64,7 +65,8 @@ public class Game {
             Size = new(1280, 720),
             WindowBorder = WindowBorder.Fixed,
             PreferredStencilBufferBits = 8,
-            PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8)
+            PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8),
+            VSync = false
         });
     }
 
@@ -116,7 +118,10 @@ public class Game {
         ImguiController = new ImGuiController(
             gl,
             View,
-            InputContext
+            InputContext,
+            onConfigureIO: () => {
+                FontManager.SetupFonts();
+            }
         );
         Console.Console.RegisterType<DefaultConsoleCommands>();
         #if DEBUG

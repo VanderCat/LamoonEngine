@@ -45,4 +45,12 @@
       <None Remove="Shaders\Error.lshdr" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Fonts\MDI.ttf" />
+      <None Remove="Fonts\RobotoMono.ttf" />
+      <EmbeddedResource Include="Fonts\RobotoMono.ttf" />
+      <None Remove="Fonts\MDI2.ttf" />
+      <EmbeddedResource Include="Fonts\MDI2.ttf" />
+    </ItemGroup>
+
 </Project>

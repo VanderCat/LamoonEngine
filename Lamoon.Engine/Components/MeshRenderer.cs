@@ -7,6 +7,7 @@ using Shader = Lamoon.Graphics.Shader;
 
 namespace Lamoon.Engine.Components; 
 
+[ToolsIcon(MaterialIcons.Grid_on)]
 public class MeshRenderer : Behaviour {
     public Material Material = Material.Default;
     public Mesh Mesh;

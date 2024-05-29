@@ -1,4 +1,5 @@
 ﻿using Lamoon.Filesystem.Exceptions;
+using Serilog;
 
 namespace Lamoon.Filesystem;
 
@@ -43,5 +44,22 @@ public static class Files {
         if (_mounted.Any(x => !x.IsReadOnly))
             return _mounted.First(x => !x.IsReadOnly);
         throw new Exception("There is no writable filesystem mounted");
+    }
+
+    public static string[] ListDirectory(string path) {
+        if (_mounted.Count < 1)
+            throw new NoFilesystemException();
+        //TODO: add check if folder exists
+        List<string> allFiles = new();
+        for (int i = _mounted.Count - 1; i >= 0; i--) {
+            try {
+                allFiles = allFiles.Concat(_mounted[i].ListDirectory(path)).ToList();
+            }
+            catch (Exception e) {
+                Log.Debug("listing failed with error: {Exception}", e);
+            }
+        }
+
+        return allFiles.ToArray();
     }
 }

@@ -1,4 +1,7 @@
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Lamoon.Engine;
+using Lamoon.Filesystem;
 using NekoLib.Core;
 using Silk.NET.Input;
 using Silk.NET.OpenGL.Extensions.ImGui;
@@ -11,10 +14,13 @@ public class ImguiToolsController : Behaviour {
     private ImguiConsole _imguiConsole;
     private ImguiToolsView _imguiView;
     private ImguiGameView _imguiGameView;
+    private ImguiDemoView _imguiDemo;
     private GameObject _other;
     private GameObject _viewGo;
 
     public IInputContext InputContext; //TODO: use global context;
+
+    public ImFontPtr Font;
     
     void Awake() {
         Game.IsToolsOpened = true;
@@ -27,6 +33,8 @@ public class ImguiToolsController : Behaviour {
         _sceneViewer = _other.AddComponent<ImguiSceneViewer>();
         _imguiConsole = _other.AddComponent<ImguiConsole>();
         _imguiGameView = _other.AddComponent<ImguiGameView>();
+        _imguiDemo = _other.AddComponent<ImguiDemoView>();
+        _imguiDemo.Enabled = false;
         _imguiView = _viewGo.AddComponent<ImguiToolsView>();
         _imguiView.kb = InputContext.Keyboards[0];
         
@@ -43,6 +51,7 @@ public class ImguiToolsController : Behaviour {
     }
 
     void DrawGui() {
+        ImGui.PushFont(Font);
         if (ImGui.BeginMainMenuBar())
         {
             const bool enabled = true;
@@ -58,12 +67,14 @@ public class ImguiToolsController : Behaviour {
                 ImGui.MenuItem("Console", "", ref _imguiConsole.Enabled);
                 ImGui.MenuItem("Tools View", "", ref _viewGo.ActiveSelf);
                 ImGui.MenuItem("Game View", "", ref _imguiGameView.Enabled);
+                ImGui.MenuItem("Demo View", "", ref _imguiDemo.Enabled);
                 ImGui.EndMenu();
             }
 
             ImGui.EndMainMenuBar();
         }
         ImGui.DockSpaceOverViewport(ImGui.GetMainViewport());
+        ImGui.PopFont();
     }
     void ToggleTools() {
         Enabled = !Enabled;
