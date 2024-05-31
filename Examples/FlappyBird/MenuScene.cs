@@ -1,10 +1,15 @@
 using System.Drawing;
 using FlappyBird.UI;
+using Lamoon.Audio;
 using Lamoon.Engine.Components;
+using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using NekoLib.Scenes;
+using Serilog;
 using Silk.NET.Input;
+using Silk.NET.OpenAL;
+using Object = NekoLib.Core.Object;
 
 namespace FlappyBird; 
 
@@ -35,13 +40,28 @@ public class MenuScene : BirdScene {
         logoRect.Size = new SizeF(1000f, 600f);
         logo.AddComponent<LogoAnim>();
         
+        var audioGo = new GameObject("Audio");
+        audioGo.Transform.Parent = canvasGameObject.Transform;
+        audioGo.AddComponent<AudioListener>();
+        var audio = audioGo.AddComponent<AudioSource>();
+        using var audioStream = Files.GetFile("Music/menu.ogg").GetStream();
+        audio.Track = new OggSoundFile(audioStream, false);
+        audio.IsLooping = true;
+        Log.Debug("{Error}",AL.GetApi().GetError());
+        audio.Play();
+        Log.Debug("{Error}",AL.GetApi().GetError());
+        
         kb = BirdGame.Instance.InputContext.Keyboards[0];
         kb.KeyDown += runGame;
+        kb.KeyDown += (_, _, _) => {
+            Object.Destroy(audio);
+        };
         base.Initialize();
     }
 
     private void runGame(IKeyboard kb, Key key, int idk) {
         kb.KeyDown -= runGame;
         SceneManager.LoadScene(new GameScene());
+        
     }
 }

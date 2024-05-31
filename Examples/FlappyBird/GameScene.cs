@@ -28,7 +28,8 @@ public class GameScene : BirdScene {
         var birdImage = testBird.AddComponent<SkiaImage>();
         birdImage.Image = Texture.FromFilesystem("Textures/bird.jpg");
         birdRect.Size = new SizeF(64f, 64f);
-        testBird.AddComponent<BirdBrains>();
+        var birdBrains = testBird.AddComponent<BirdBrains>();
+        birdBrains._jumpSfx = testBird.AddComponent<AudioSource>();
         
         var generatorGo = new GameObject("generator");
         var generator = generatorGo.AddComponent<ObstacleGenerator>();

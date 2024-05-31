@@ -1,4 +1,7 @@
+using Lamoon.Audio;
 using Lamoon.Engine;
+using Lamoon.Engine.Components;
+using Lamoon.Filesystem;
 using NekoLib.Core;
 using NekoLib.Scenes;
 using Serilog;
@@ -14,8 +17,14 @@ public class BirdBrains : Behaviour {
     private IKeyboard kb;
     private bool jumped = false;
 
+    public AudioSource _jumpSfx;
+
     void Awake() {
         kb = BirdGame.Instance.InputContext.Keyboards[0];
+        //_jumpSfx = GameObject.AddComponent<AudioSource>(); //FIXME: we absolutley could create components on gamobjects from components
+        using var audioStream = Files.GetFile("Sounds/jump.ogg").GetStream();
+        _jumpSfx.Track = new OggSoundFile(audioStream, false);
+        _jumpSfx.IsLooping = false;
     }
     
     void Update() {
@@ -23,7 +32,7 @@ public class BirdBrains : Behaviour {
         if (kb.IsKeyPressed(Key.W)) {
             if (!jumped) {
                 Speed = -JumpForce;
-                Log.Error("Jump!");
+                _jumpSfx.Play();
             }
             jumped = true;
         }

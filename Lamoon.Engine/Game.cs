@@ -4,6 +4,7 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using ImGuiNET;
+using Lamoon.Audio;
 using Lamoon.Engine.Console;
 using Lamoon.Filesystem;
 using Serilog;
@@ -55,19 +56,23 @@ public class Game {
 
     public IWindow Window;
     public IView View;
+    public SoundDevice SoundDevice;
+    public SoundContext SoundContext;
     
     public static bool IsToolsOpened;
+    public WindowOptions WindowOptions = WindowOptions.Default with {
+        Size = new(1280, 720),
+        WindowBorder = WindowBorder.Fixed,
+        PreferredStencilBufferBits = 8,
+        PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8),
+    };
     
     public void InitializeWindow() {
+        SoundDevice = new SoundDevice();
+        SoundContext = new SoundContext(SoundDevice);
         Glfw.GetApi().WindowHint(WindowHintBool.OpenGLDebugContext, true);
         Glfw.GetApi().WindowHint(WindowHintContextApi.ContextCreationApi, ContextApi.EglContextApi);
-        Window = Silk.NET.Windowing.Window.Create(WindowOptions.Default with {
-            Size = new(1280, 720),
-            WindowBorder = WindowBorder.Fixed,
-            PreferredStencilBufferBits = 8,
-            PreferredBitDepth = new Vector4D<int>(8, 8, 8, 8),
-            VSync = false
-        });
+        Window = Silk.NET.Windowing.Window.Create(WindowOptions);
     }
 
     public void BindCallbacks(IView view) {
