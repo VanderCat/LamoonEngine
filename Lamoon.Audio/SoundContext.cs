@@ -7,13 +7,11 @@ public unsafe class SoundContext : IDisposable {
     private SoundDevice _device;
     public SoundContext(SoundDevice device) {
         _device = device;
-        var alc = ALContext.GetApi();
-        Handle = alc.CreateContext(_device.Handle, null);
-        alc.MakeContextCurrent(Handle);
+        Handle = OpenAL.ContextApi.CreateContext(_device.Handle, null);
+        OpenAL.ContextApi.MakeContextCurrent(Handle);
     }
 
     public void Dispose() {
-        var alc = ALContext.GetApi();
-        alc.DestroyContext(Handle);
+        OpenAL.ContextApi.DestroyContext(Handle);
     }
 }
