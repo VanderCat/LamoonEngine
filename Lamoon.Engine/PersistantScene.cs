@@ -23,4 +23,10 @@ public class PersistantScene : IScene {
             go.Draw();
         }
     }
+
+    public void Dispose() {
+        foreach (var go in GameObjects) {
+            go.Dispose();
+        }
+    }
 }

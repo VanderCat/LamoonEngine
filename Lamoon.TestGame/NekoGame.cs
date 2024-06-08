@@ -36,7 +36,7 @@ public class NekoGame : Game {
         var tools = true; //todo: make it program arg
         SceneManager.LoadScene(new PersistantScene());
         if (tools) LoadTools();
-        SceneManager.LoadScene(new ModelViewerScene());
+        SceneManager.LoadScene(new TestScene());
     }
 
     public void LoadTools() {
