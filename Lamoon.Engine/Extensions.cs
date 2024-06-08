@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Lamoon.Filesystem;
 using Lamoon.Graphics;
@@ -39,4 +40,11 @@ public static class Extensions {
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float GetAspectRatio(this Size size) => (float)size.Width / (float)size.Height;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector3 ToVector3(this Vector4 vector4) => new Vector3(vector4.X, vector4.Y, vector4.Z);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2 ToVector2(this Vector4 vector4) => new Vector2(vector4.X, vector4.Y);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2 ToVector2(this Vector3 vector3) => new Vector2(vector3.X, vector3.Y);
 }

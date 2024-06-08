@@ -135,4 +135,28 @@ public class Camera : Behaviour {
         gl.BindVertexArray(0);
     }
 
+    public Ray ScreenPointToRay(Vector2 position) {
+        var ray = new Ray();
+        var pos4d = new Vector4(
+            (2.0f * position.X) / GraphicsReferences.ScreenSize.Width - 1.0f,
+            1.0f - (2.0f * position.Y) / GraphicsReferences.ScreenSize.Height,
+            -1.0f, 
+            1f);
+        if (!Matrix4x4.Invert(ProjectionMatrix, out var inverseProjectionMartrix))
+            throw new Exception("Failed to invert projection matrix");
+        
+        var posEye = Vector4.Transform(pos4d, inverseProjectionMartrix);
+        posEye = posEye with {
+            Z = -1f,
+            W = 0f
+        };
+        
+        if (!Matrix4x4.Invert(ViewMatrix, out var inverseViewMartrix))
+            throw new Exception("Failed to invert view matrix");
+        var rayWorld = Vector4.Transform(posEye, inverseViewMartrix);
+        ray.Origin = Transform.Position;
+        ray.Direction = rayWorld.ToVector3();
+        return ray;
+    }
+
 }
