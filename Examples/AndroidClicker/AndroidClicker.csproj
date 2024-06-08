@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net8.0-android</TargetFramework>
+        <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+        <OutputType>Exe</OutputType>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <ApplicationId>at.vanderc.AndroidClicker</ApplicationId>
+        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <DefineConstants>__MOBILE__;__ANDROID__;</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Lamoon.Engine\Lamoon.Engine.csproj">
+        <Properties>DefineConstants=__ANDROID__</Properties>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Shaders\base.frag" />
+      <EmbeddedResource Include="Shaders\base.vert" />
+      <EmbeddedResource Include="Shaders\error.frag" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Serilog.Sinks.Xamarin" Version="1.0.0" />
+    </ItemGroup>
+</Project>

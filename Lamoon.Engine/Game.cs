@@ -99,13 +99,19 @@ public class Game {
     }
     
     public virtual void Draw(double deltaTime) {
+        #if !__ANDROID__
         ImguiController.Update((float) deltaTime);
+        #endif
         Immedieate.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         SceneManager.Draw();
+        #if !__ANDROID__
         ImguiController.Render();
+        #endif
     }
 
+    #if !__ANDROID__
     public ImGuiController ImguiController;
+    #endif
     public virtual void Load() {
         var assemblyGraphicsFs = new AssemblyFilesystem(typeof(Texture).Assembly);
         assemblyGraphicsFs.Mount();
@@ -120,6 +126,7 @@ public class Game {
         GraphicsReferences.OpenGl = gl;
         GraphicsReferences.ScreenSize = new Size(View.FramebufferSize.X, View.FramebufferSize.Y);
         InputContext = View.CreateInput();
+        #if !__ANDROID__
         ImguiController = new ImGuiController(
             gl,
             View,
@@ -128,6 +135,7 @@ public class Game {
                 FontManager.SetupFonts();
             }
         );
+        #endif
         Console.Console.RegisterType<DefaultConsoleCommands>();
         #if DEBUG
         gl.Enable( EnableCap.DebugOutput );

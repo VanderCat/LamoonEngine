@@ -14,11 +14,9 @@ public class Shader {
 
     static Shader() {
         var assembly = Assembly.GetAssembly(typeof(Texture));
-        using var streamFrag = assembly
-            .GetManifestResourceStream("Lamoon.Graphics.Shaders.base.frag");
-        using var streamVert = assembly
-            .GetManifestResourceStream("Lamoon.Graphics.Shaders.base.vert");
-        var a = assembly.GetManifestResourceNames();
+        using var streamFrag = Files.GetFile("Shaders/base.frag").GetStream();
+        using var streamVert = Files.GetFile("Shaders/base.vert").GetStream();
+        
         using var streamReader = new StreamReader(streamFrag);
         var fragCode = streamReader.ReadToEnd();
         

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlappyBird", "Examples\Flap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamoon.Audio", "Lamoon.Audio\Lamoon.Audio.csproj", "{84E125E1-5579-4463-B767-2F089F31ABD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidClicker", "Examples\AndroidClicker\AndroidClicker.csproj", "{F9F94147-C77C-4D39-B227-9C20749F0E9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,9 @@ Global
 		{84E125E1-5579-4463-B767-2F089F31ABD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84E125E1-5579-4463-B767-2F089F31ABD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84E125E1-5579-4463-B767-2F089F31ABD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F94147-C77C-4D39-B227-9C20749F0E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F94147-C77C-4D39-B227-9C20749F0E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F94147-C77C-4D39-B227-9C20749F0E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F94147-C77C-4D39-B227-9C20749F0E9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
