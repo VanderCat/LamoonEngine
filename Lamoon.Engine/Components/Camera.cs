@@ -22,7 +22,7 @@ public class Camera : Behaviour {
         get {
             if (Orthographic)
                 return Matrix4x4.CreateOrthographic(SizeToRender.Width * OrthoScale,
-                    SizeToRender.Width * OrthoScale, ZNear, ZFar);
+                    SizeToRender.Height * OrthoScale, ZNear, ZFar);
             var aspectRatio = (float) SizeToRender.Width / SizeToRender.Height;
             return Matrix4x4.CreatePerspectiveFieldOfView(
                 float.DegreesToRadians(FieldOfView),

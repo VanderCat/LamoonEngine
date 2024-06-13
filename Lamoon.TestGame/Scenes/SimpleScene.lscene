@@ -1,0 +1,9 @@
+name: SimpleScene
+gameObjects:
+  -
+    name: "hi hi hi"
+    components:
+      -
+        type: Lamoon.TestGame.Dev.HelloWorldPrinter
+        fields:
+          test: hello, from hype
