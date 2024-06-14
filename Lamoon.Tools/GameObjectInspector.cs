@@ -26,6 +26,7 @@ public class GameObjectInspector : Inspector {
             var iconAttribute = (ToolsIconAttribute?)component.GetType().GetCustomAttribute(typeof(ToolsIconAttribute));
             var icon = iconAttribute?.Icon;
             if (ImGui.CollapsingHeader((icon??MaterialIcons.Insert_drive_file)+ component.GetType().Name+"##"+component.Id)) {
+                ImGui.TextDisabled($"ID:{component.Id}");
                 var a = GetInspectorFor(component); // FIXME: it will be SLOWWWW
                 a.DrawGui();
             }

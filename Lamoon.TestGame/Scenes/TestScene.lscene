@@ -16,7 +16,7 @@ gameObjects:
         type: Lamoon.TestGame.Dev.HelloWorldPrinter
         id: 2795f9e1-0fb5-49eb-a2c2-afaa6ad435c4
         fields:
-          test: hello, from file
+          test: !type:System.String hello, from file
     children:
       -
         name: "GameObject"
@@ -30,4 +30,4 @@ gameObjects:
           - type: Lamoon.TestGame.Dev.HelloWorldPrinter
             id: 2795f9e1-0fb5-49eb-a2c2-afaa6ad435c4
             fields:
-              test: hello, from child
+              test: !type:System.String hello, from child

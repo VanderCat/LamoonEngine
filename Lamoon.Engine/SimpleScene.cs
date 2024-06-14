@@ -1,5 +1,6 @@
 using NekoLib.Core;
 using NekoLib.Scenes;
+using Serilog;
 
 namespace Lamoon.Engine; 
 
@@ -33,6 +34,15 @@ public class SimpleScene : IScene {
         
         foreach (var gameObject in currentGameObjects) {
             gameObject.SendMessage("DrawGui");
+        }
+    }
+
+    public void Dispose() {
+        Log.Debug("Disposing scene");
+        var currentGameObjects = new GameObject[GameObjects.Count];
+        GameObjects.CopyTo(currentGameObjects);
+        foreach (var gameObject in currentGameObjects) {
+            gameObject.Dispose();
         }
     }
 }

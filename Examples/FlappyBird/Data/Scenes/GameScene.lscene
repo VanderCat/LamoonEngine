@@ -1,0 +1,38 @@
+name: Game Scene
+gameObjects:
+  - name: Camera
+    components:
+      - type: Lamoon.Engine.Components.Camera
+        fields:
+          IsMain: !type:System.Boolean true
+  - name: UI
+    id: 69eb3b47-e68f-407f-bf1e-ca3b64bb1066
+    components:
+      - type: Lamoon.Engine.Components.SkiaCanvas
+    children:
+      - name: bg
+        components:
+          - type: FlappyBird.UI.Rect
+            fields:
+              Size: !type:System.Drawing.SizeF [1280, 720]
+          - type: FlappyBird.UI.SkiaImage
+            fields:
+              Image: !type:Lamoon.Graphics.Texture Textures/bg.png
+      - name: bird
+        components:
+          - type: FlappyBird.UI.Rect
+            fields:
+              Size: !type:System.Drawing.SizeF [64, 64]
+          - type: FlappyBird.UI.SkiaImage
+            fields:
+              Image: !type:Lamoon.Graphics.Texture Textures/bird.jpg
+          - type: Lamoon.Engine.Components.AudioSource
+            id: 9ad5b056-a832-4cda-bd87-0e5d8dd9e408
+          - type: FlappyBird.BirdBrains
+            fields:
+              _jumpSfx: !type:Lamoon.Engine.YamlExtras.ComponentRef 9ad5b056-a832-4cda-bd87-0e5d8dd9e408
+      - name: generator
+        components:
+        - type: FlappyBird.ObstacleGenerator
+          fields:
+            canvas: !type:Lamoon.Engine.YamlExtras.GameObjectRef 69eb3b47-e68f-407f-bf1e-ca3b64bb1066

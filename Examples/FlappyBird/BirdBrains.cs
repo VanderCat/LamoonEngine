@@ -39,8 +39,9 @@ public class BirdBrains : Behaviour {
         else {
             jumped = false;
         }
-        if (Transform.LocalPosition.Y > 720-64) SceneManager.LoadScene(new MenuScene());
-        if (Transform.LocalPosition.Y < 0) SceneManager.LoadScene(new MenuScene());
+        if (Transform.LocalPosition.Y is > 720-64 or < 0)
+            //SceneManager.LoadScene(new MenuScene()); Old Behaviour
+            Util.LoadSceneFromFilesystem("Scenes/MenuScene.lscene");
     }
 
     void ApplyGravity() {

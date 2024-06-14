@@ -1,5 +1,7 @@
 using System.Numerics;
+using System.Reflection;
 using Lamoon.Data;
+using Lamoon.Engine.YamlExtras;
 using Lamoon.Filesystem;
 using NekoLib.Core;
 using NekoLib.Scenes;
@@ -91,13 +93,38 @@ public static class Util {
                 .GetProperty("GameObject", BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy)
                 .GetSetMethod(true)
                 .Invoke(component, new object?[]{gameObject});
+            component.Id = definition.Id;
             if (gameObject.Initialized)  {
                 component.Invoke("Awake");
                 component.GetType().GetField("_awoke").SetValue(component, true);
             }
             if (definition.Fields is not null)
-                foreach (var field in definition.Fields) {
-                    component.GetType().GetField(field.Key).SetValue(component, field.Value);
+                foreach (var fieldKv in definition.Fields) {
+                    Log.Debug("Tying to process {Field}", fieldKv);
+                    var value = fieldKv.Value;
+
+                    if (fieldKv.Value.GetType().IsAssignableTo(typeof(ObjectRef))) {
+                        Log.Debug("it is an ref");
+                        var objRef = (ObjectRef)value;
+                        var nlobject = objRef.Object;
+                        if (nlobject is null) {
+                            Log.Error("The Object with an Id {RefId} have not been found", objRef.Reference);
+                            continue;
+                        }
+                        value = nlobject;
+                    }
+                    var field = component.GetType().GetField(fieldKv.Key);
+                    if (field is not null) {
+                        field.SetValue(component, value);
+                        continue;
+                    }
+                    Log.Debug("Field was not found, trying property");
+                    var property = component.GetType().GetProperty(fieldKv.Key);
+                    if (property is null) {
+                        Log.Error("Not Field nor Property {Field} has been found", fieldKv.Key);
+                        continue;
+                    }
+                    property.SetValue(component, value);
                 }
         }
     }

@@ -1,0 +1,41 @@
+name: Menu Scene
+gameObjects:
+  - name: Camera
+    components:
+      - type: Lamoon.Engine.Components.Camera
+        fields:
+          IsMain: !type:System.Boolean true
+  - name: UI
+    components:
+      - type: Lamoon.Engine.Components.SkiaCanvas
+    children:
+      - name: BackGround
+        components:
+          - type: FlappyBird.UI.Rect
+            fields:
+              Size: !type:System.Drawing.SizeF [1280, 720]
+          - type: FlappyBird.UI.SkiaImage
+            fields:
+              Image: !type:Lamoon.Graphics.Texture Textures/bg.png
+      - name: Logo
+        components:
+          - type: FlappyBird.UI.Rect
+            fields:
+              Size: !type:System.Drawing.SizeF [ 1000, 600 ]
+          - type: FlappyBird.UI.SkiaImage
+            fields:
+              Image: !type:Lamoon.Graphics.Texture Textures/logo.png
+          - type: FlappyBird.LogoAnim
+      - name: Audio
+        components:
+          - type: Lamoon.Engine.Components.AudioListener
+          - type: Lamoon.Engine.Components.AudioSource
+            id: b4debd6c-a6a7-485c-9c8a-fe9bdd150e4e
+            fields:
+              Track: !type:Lamoon.Audio.OggSoundFile Music/menu.ogg
+              IsLooping: !type:System.Boolean true
+  - name: MenuController
+    components:
+      - type: FlappyBird.MenuController
+        fields:
+          Source: !type:Lamoon.Engine.YamlExtras.ComponentRef b4debd6c-a6a7-485c-9c8a-fe9bdd150e4e

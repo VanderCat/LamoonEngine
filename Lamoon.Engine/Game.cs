@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using ImGuiNET;
 using Lamoon.Audio;
 using Lamoon.Engine.Console;
+using Lamoon.Engine.YamlExtras;
 using Lamoon.Filesystem;
 using Serilog;
 using Serilog.Events;
@@ -52,6 +53,11 @@ public class Game {
             .WriteTo.File($"logs/lamoon{DateTime.Now:yy.MM.dd-hh.MM.ss}.log", LogEventLevel.Verbose, outputTemplate)
             .CreateLogger()
             .ForContext("Name", "LamoonEngine");
+        
+        Data.Definition.TypeConverters.Add(new ObjectRefConverter());
+        Data.Definition.TypeConverters.Add(new TextureConverter());
+        Data.Definition.TypeConverters.Add(new OggSoundFileConverter());
+        Log.Debug("{Meow}", typeof(ComponentRef).IsAssignableTo(typeof(ObjectRef)));
     }
 
     public IWindow Window;

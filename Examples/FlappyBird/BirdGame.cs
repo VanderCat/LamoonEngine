@@ -18,13 +18,14 @@ public class BirdGame : Game {
 
     public override void Load() {
         base.Load();
-        var WorkFolder = new FolderFilesystem("Data");
-        WorkFolder.Mount();
+        var workFolder = new FolderFilesystem("Data");
+        workFolder.Mount();
 
         var tools = false;
         SceneManager.LoadScene(new PersistantScene());
         if (tools) LoadTools();
-        SceneManager.LoadScene(new MenuScene());
+        //SceneManager.LoadScene(new MenuScene());
+        Util.LoadSceneFromFilesystem("Scenes/MenuScene.lscene");
     }
 
     public void LoadTools() {

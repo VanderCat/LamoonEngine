@@ -6,4 +6,4 @@ gameObjects:
       -
         type: Lamoon.TestGame.Dev.HelloWorldPrinter
         fields:
-          test: hello, from hype
+          test: !type:System.String hello, from hype
