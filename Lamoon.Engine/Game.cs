@@ -41,24 +41,6 @@ public class Game {
     
     protected Game() {
     }
-    
-    static Game() {
-        GlfwWindowing.Use();
-        
-        const string outputTemplate = "{Timestamp:HH:mm:ss} [{Level}] {Name}: {Message}{Exception}{NewLine}";
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Verbose()
-            .Enrich.FromLogContext()
-            .WriteTo.Console(LogEventLevel.Verbose, outputTemplate)
-            .WriteTo.File($"logs/lamoon{DateTime.Now:yy.MM.dd-hh.MM.ss}.log", LogEventLevel.Verbose, outputTemplate)
-            .CreateLogger()
-            .ForContext("Name", "LamoonEngine");
-        
-        Data.Definition.TypeConverters.Add(new ObjectRefConverter());
-        Data.Definition.TypeConverters.Add(new TextureConverter());
-        Data.Definition.TypeConverters.Add(new OggSoundFileConverter());
-        Log.Debug("{Meow}", typeof(ComponentRef).IsAssignableTo(typeof(ObjectRef)));
-    }
 
     public IWindow Window;
     public IView View;

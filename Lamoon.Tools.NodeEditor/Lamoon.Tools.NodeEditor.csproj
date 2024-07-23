@@ -1,15 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <LamoonProjectId>FlappyBird</LamoonProjectId>
+        <RootNamespace>Lamoon.Tools.ParticleEditor</RootNamespace>
     </PropertyGroup>
 
-    <Import Project="../../Lamoon.Engine/Game.targets" />
-
     <ItemGroup>
-      <ProjectReference Include="..\..\Lamoon.Tools\Lamoon.Tools.csproj" />
+      <ProjectReference Include="..\Lamoon.Tools\Lamoon.Tools.csproj" />
     </ItemGroup>
 
 </Project>

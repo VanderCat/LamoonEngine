@@ -14,7 +14,7 @@ namespace Lamoon.Engine.Components;
 public class SkiaCanvas : Behaviour {
     private Framebuffer _fbo;
     private Renderbuffer _rbo;
-    private Graphics.Texture renderTexture;
+    public static Graphics.Texture renderTexture;
     private GRBackendRenderTarget _grBackendRenderTarget;
     private SKSurface _skSurface;
     public SKCanvas Canvas;
@@ -52,7 +52,7 @@ public class SkiaCanvas : Behaviour {
         var gl = GraphicsReferences.OpenGl;
         Skia.Instance.GrContext.ResetContext(GRGlBackendState.All);
         
-        //_fbo.Bind();
+        _fbo.Bind();
         var canvas = Canvas;
         
         canvas.Clear(new SKColor(0,0,0,0));

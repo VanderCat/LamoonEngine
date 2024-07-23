@@ -1,0 +1,30 @@
+<Project>
+    <PropertyGroup>
+        <AssemblyName Condition="'$(LamoonProjectId)' != ''">game</AssemblyName>
+        <CopyLocalLockFileAssemblies Condition="'$(LamoonProjectId)' != ''">true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(LamoonProjectId)' != ''">
+        <ProjectReference Include="..\..\Lamoon.Engine\Lamoon.Engine.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(LamoonProjectId)' != ''">
+        <None Update="$(LamoonProjectId)\**"  CopyToOutputDirectory="PreserveNewest"  />
+    </ItemGroup>
+
+    <Target Name="SetupDirAfterBuild" AfterTargets="Build" Condition="'$(LamoonProjectId)' != ''">
+        <ItemGroup>
+            <_BinItems Include="$(OutDir)\game.*.*" />
+        </ItemGroup>
+        <Move SourceFiles="@(_BinItems)" DestinationFolder="$(OutDir)\$(LamoonProjectId)\bin\" />
+        <ItemGroup>
+            <_DllItems Include="$(OutDir)\*.dll" />
+            <_DllItems Include="$(OutDir)\*.pdb" />
+        </ItemGroup>
+        <Move SourceFiles="@(_DllItems)" DestinationFolder="$(OutDir)\bin\" />
+        <ItemGroup>
+            <_EngineItems Include="$(OutDir)\bin\Lamoon.Engine.dll" />
+        </ItemGroup>
+        <Move SourceFiles="@(_EngineItems)" DestinationFolder="$(OutDir)\" />
+    </Target>
+</Project>

@@ -42,10 +42,11 @@ public class TestScene : IScene {
         camera.Name = "Camera";
         var cameraComponent = camera.AddComponent<Camera>();
         cameraComponent.IsMain = true;
+        cameraComponent.Orthographic = true;
 
         var testMesh = new GameObject();
         testMesh.Name = "TestMesh";
-        var mesh  = Mesh.Quad;
+        var mesh  = Mesh.Default;
         var material = Material.FromFilesystem("Materials/dev_01.lmat");
         var meshRenderer = testMesh.AddComponent<MeshRenderer>();
         meshRenderer.Mesh = mesh;

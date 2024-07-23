@@ -1,4 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CVanderCat_005CDocuments_005CProgramming_005CCSharp_005CYoga_005CYoga_005Cbin_005CDebug_005Cnetstandard2_002E1_005CYogaSharp_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CVanderCat_005CDocuments_005CProgramming_005CCSharp_005CYoga_005CYoga_005Cbin_005CDebug_005Cnetstandard2_002E1_005Cyoga_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="\home\vandercat\.nuget\packages\sixlabors.imagesharp\3.1.2\lib\net6.0\SixLabors.ImageSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="\home\vandercat\.nuget\packages\silk.net.opengl\2.20.0\lib\net5.0\Silk.NET.OpenGL.dll" /&gt;&#xD;

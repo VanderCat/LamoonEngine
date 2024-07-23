@@ -1,0 +1,17 @@
+# Lamoon Game Manifest (meta.lgame)
+A game definition.
+
+## Sample:
+```yaml
+#
+game: Test Game
+meta:
+  developers: 
+    - VanderCat
+  website: https://github.com/VanderCat/LamoonEngine
+  license: zlib
+filesystem:
+  - !bin {{mod}}/bin/
+  - !mount {{mod}}
+  - !mount {{mod}}/custom/*
+```

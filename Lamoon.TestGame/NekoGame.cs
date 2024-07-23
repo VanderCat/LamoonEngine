@@ -26,18 +26,12 @@ public class NekoGame : Game {
 
     public override void Load() {
         base.Load();
-        var GameFolder = new FolderFilesystem("./");
-        GameFolder.Mount();
-        var WorkFolder = new FolderFilesystem("Data");
-        WorkFolder.Mount();
-        //var mod = new FolderFilesystem("Mods/TestMod");
-        //mod.Mount();
-
+        
         var tools = true; //todo: make it program arg
         SceneManager.LoadScene(new PersistantScene());
         if (tools) LoadTools();
-        //SceneManager.LoadScene(new TestScene());
-        Util.LoadSceneFromFilesystem("Scenes/TestScene.lscene");
+        SceneManager.LoadScene(new TestScene());
+        //Util.LoadSceneFromFilesystem("Scenes/TestScene.lscene");
     }
 
     public void LoadTools() {

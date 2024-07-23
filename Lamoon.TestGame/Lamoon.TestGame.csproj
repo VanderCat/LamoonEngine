@@ -1,25 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LamoonProjectId>TestGame</LamoonProjectId>
     </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <PlatformTarget>x64</PlatformTarget>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <PlatformTarget>x64</PlatformTarget>
-    </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
       <ProjectReference Include="..\Lamoon.Physics\Lamoon.Physics.csproj" />
       <ProjectReference Include="..\Lamoon.Tools\Lamoon.Tools.csproj" />
+      <ProjectReference Include="..\Lamoon.UI\Lamoon.UI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,40 +20,6 @@
       <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.21.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="Models\test_map.blend">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Models\test_map.obj">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Materials\dev_01.lmat">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Materials\dev_01.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Materials\test.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Models\test_map2.lmdl">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Models\test_map2.lmdlc">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Materials\dev_02.lmat">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Materials\dev_02.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Scenes\SimpleScene.lscene">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Scenes\TestScene.lscene">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+    <Import Project="../Lamoon.Engine/Game.targets"/>
 
 </Project>

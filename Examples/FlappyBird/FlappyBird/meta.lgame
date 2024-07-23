@@ -1,0 +1,10 @@
+game: Flappy Bird
+meta:
+  developers: 
+    - VanderCat
+  website: https://github.com/VanderCat/LamoonEngine
+  license: zlib
+filesystem:
+  - !bin "{{mod}}/bin/"
+  - !mount "{{mod}}"
+  - !mount "{{mod}}/custom/*"

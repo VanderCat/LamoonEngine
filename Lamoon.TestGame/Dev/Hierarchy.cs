@@ -27,7 +27,7 @@ public class Hierarchy : Behaviour {
     private string GetSceneHierarchy() {
         var text = "";
         var index = 0;
-        foreach (var go in GameObject.Scene.GetRootGameObjects()) {
+        foreach (var go in GameObject.Scene.RootGameObjects) {
             text = $"{text} {index}. {go.Name}\n{GetComponentHierarchy(go, 1)}\n{GetObjectHierarchy(go, 1)}\n";
             index++;
         }

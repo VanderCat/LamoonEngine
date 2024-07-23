@@ -62,12 +62,13 @@ public class ImguiToolsController : Behaviour {
                 ImGui.EndMenu();
             }
             if (ImGui.BeginMenu("View")) {
-                ImGui.MenuItem("Inspector", "", ref _inspect.Enabled);
-                ImGui.MenuItem("Scene Viewer", "", ref _sceneViewer.Enabled);
-                ImGui.MenuItem("Console", "", ref _imguiConsole.Enabled);
-                ImGui.MenuItem("Tools View", "", ref _viewGo.ActiveSelf);
-                ImGui.MenuItem("Game View", "", ref _imguiGameView.Enabled);
-                ImGui.MenuItem("Demo View", "", ref _imguiDemo.Enabled);
+                // TODO: FIXME
+                // ImGui.MenuItem("Inspector", "", ref _inspect.Enabled);
+                // ImGui.MenuItem("Scene Viewer", "", ref _sceneViewer.Enabled);
+                // ImGui.MenuItem("Console", "", ref _imguiConsole.Enabled);
+                // ImGui.MenuItem("Tools View", "", ref _viewGo.ActiveSelf);
+                // ImGui.MenuItem("Game View", "", ref _imguiGameView.Enabled);
+                // ImGui.MenuItem("Demo View", "", ref _imguiDemo.Enabled);
                 ImGui.EndMenu();
             }
 
