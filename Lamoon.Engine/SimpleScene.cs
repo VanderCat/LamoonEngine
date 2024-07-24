@@ -5,8 +5,8 @@ using Serilog;
 namespace Lamoon.Engine; 
 
 public class SimpleScene : IScene {
-    public string Name { get; protected set; } = "Unnamed";
-    public bool DestroyOnLoad { get; protected set; } = true;
+    public virtual string Name { get; protected set; } = "Unnamed";
+    public virtual bool DestroyOnLoad { get; set; } = true;
     public int Index { get; set; }
     public List<GameObject> GameObjects { get; } = new();
     public virtual void Initialize() {
