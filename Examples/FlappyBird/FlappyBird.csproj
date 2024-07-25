@@ -8,8 +8,4 @@
 
     <Import Project="../../Lamoon.Engine/Game.targets" />
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Lamoon.Tools\Lamoon.Tools.csproj" />
-    </ItemGroup>
-
 </Project>

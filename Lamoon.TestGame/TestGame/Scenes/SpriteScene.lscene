@@ -1,0 +1,14 @@
+name: TestSprite
+gameObjects:
+  - name: "Camera"
+    components:
+      - type: Lamoon.Engine.Components.Camera
+        fields:
+          IsMain: !type:System.Boolean true
+          Orthographic: !type:System.Boolean true
+  - name: "TestSprite"
+    components:
+      - type: Lamoon.Engine.Components.SpriteRenderer
+        fields:
+          Sprite: !type:Lamoon.Graphics.Sprite
+            Material: !type:Lamoon.Graphics.Material Materials/dev_01.lmat

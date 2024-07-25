@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <LamoonProjectId>FlappyBird</LamoonProjectId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Silk.NET.OpenGLES" Version="2.21.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Examples\FlappyBird\FlappyBird.csproj" />
+      <ProjectReference Include="..\Lamoon.Engine\Lamoon.Engine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="game">
+        <HintPath>..\Examples\FlappyBird\bin\Debug\net8.0\FlappyBird\bin\game.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    
+    <Import Project="wasm.targets" />
+
+</Project>

@@ -1,4 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CVanderCat_005CDocuments_005CProgramming_005CCSharp_005CLamoonEngine_005CExamples_005CFlappyBird_005Cbin_005CDebug_005Cnet8_002E0_005CFlappyBird_005Cbin_005Cgame_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CVanderCat_005CDocuments_005CProgramming_005CCSharp_005CYoga_005CYoga_005Cbin_005CDebug_005Cnetstandard2_002E1_005CYogaSharp_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CVanderCat_005CDocuments_005CProgramming_005CCSharp_005CYoga_005CYoga_005Cbin_005CDebug_005Cnetstandard2_002E1_005Cyoga_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
@@ -6,4 +7,7 @@
   &lt;Assembly Path="\home\vandercat\.nuget\packages\silk.net.opengl\2.20.0\lib\net5.0\Silk.NET.OpenGL.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\VanderCat\.nuget\packages\yamldotnet\15.1.2\lib\netstandard2.1\YamlDotNet.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\VanderCat\.nuget\packages\yamldotnet\15.1.2\lib\net8.0\YamlDotNet.dll" /&gt;&#xD;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=5767629d_002Dca4e_002D4358_002Dbe9f_002D3c3a6a05cfeb_0023Lamoon_002ETools/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=83702b08_002Df084_002D4b4a_002D91cf_002D90cceba368c5_0023Lamoon_002ETools_002ENodeEditor/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=df39f9c7_002De118_002D457a_002Dadcc_002D368ec0d95127_0023Lamoon_002ETools_002EModelCompiler/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

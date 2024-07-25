@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using ImGuiNET;
+//using ImGuiNET;
 using Lamoon.Audio;
 using Lamoon.Engine.Console;
 using Lamoon.Engine.YamlExtras;
@@ -18,8 +18,8 @@ using Lamoon.Graphics.Skia;
 using NekoLib.Scenes;
 using Silk.NET.GLFW;
 using Silk.NET.Input;
-using Silk.NET.OpenGL.Extensions.ImGui;
-using Silk.NET.Windowing.Glfw;
+//using Silk.NET.OpenGL.Extensions.ImGui;
+//using Silk.NET.Windowing.Glfw;
 using Texture = Lamoon.Graphics.Texture;
 using Timer = NekoLib.Core.Timer;
 
@@ -87,13 +87,13 @@ public class Game {
     }
     
     public virtual void Draw(double deltaTime) {
-        ImguiController.Update((float) deltaTime);
+        //ImguiController.Update((float) deltaTime);
         Immedieate.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         SceneManager.Draw();
-        ImguiController.Render();
+        //ImguiController.Render();
     }
 
-    public ImGuiController ImguiController;
+    //public ImGuiController ImguiController;
     public virtual void Load() {
         var assemblyGraphicsFs = new AssemblyFilesystem(typeof(Texture).Assembly);
         assemblyGraphicsFs.Mount();
@@ -102,42 +102,42 @@ public class Game {
         assemblyFs.Mount();
 
         sw = Stopwatch.StartNew();
-        var gl = View.CreateOpenGL();
-        Skia.GlContext = View.GLContext;
-
-        GraphicsReferences.OpenGl = gl;
-        GraphicsReferences.ScreenSize = new Size(View.FramebufferSize.X, View.FramebufferSize.Y);
-        InputContext = View.CreateInput();
-        ImguiController = new ImGuiController(
+        var gl = GraphicsReferences.OpenGl;
+        //Skia.GlContext = ;
+        
+        GraphicsReferences.ScreenSize = new Size(1280, 720);
+        //InputContext = View.CreateInput();
+        /*ImguiController = new ImGuiController(
             gl,
             View,
             InputContext,
             onConfigureIO: () => {
                 FontManager.SetupFonts();
             }
-        );
+        );*/
         Console.Console.RegisterType<DefaultConsoleCommands>();
-        #if DEBUG
-        gl.Enable( EnableCap.DebugOutput );
-        _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
-        unsafe {
-            gl.DebugMessageCallback(
-                (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {
-                    var logLevel = ((DebugSeverity)severity) switch {
-                        DebugSeverity.DontCare => LogEventLevel.Verbose,
-                        DebugSeverity.DebugSeverityNotification => LogEventLevel.Debug,
-                        DebugSeverity.DebugSeverityHigh => LogEventLevel.Error,
-                        DebugSeverity.DebugSeverityMedium => LogEventLevel.Warning,
-                        DebugSeverity.DebugSeverityLow => LogEventLevel.Information,
-                        _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
-                    };
-                    if (logLevel == LogEventLevel.Verbose  || logLevel == LogEventLevel.Debug)
-                        return; // this is too spammy when using IMGUI on nvidia card
-                    _openGlLogger.Write(logLevel, Marshal.PtrToStringAnsi(message)+"\n"+new StackTrace(1));
-                },
-                null);
-        }
-        #endif
+        /*
+#if DEBUG
+    gl.Enable( EnableCap.DebugOutput );
+    _openGlLogger = Log.Logger.ForContext("Name", "OpenGL");
+    unsafe {
+        gl.DebugMessageCallback(
+            (GLEnum source, GLEnum type, int id, GLEnum severity, int length, nint message, nint userparam) => {
+                var logLevel = ((DebugSeverity)severity) switch {
+                    DebugSeverity.DontCare => LogEventLevel.Verbose,
+                    DebugSeverity.DebugSeverityNotification => LogEventLevel.Debug,
+                    DebugSeverity.DebugSeverityHigh => LogEventLevel.Error,
+                    DebugSeverity.DebugSeverityMedium => LogEventLevel.Warning,
+                    DebugSeverity.DebugSeverityLow => LogEventLevel.Information,
+                    _ => throw new ArgumentOutOfRangeException(nameof(severity), severity, null)
+                };
+                if (logLevel == LogEventLevel.Verbose  || logLevel == LogEventLevel.Debug)
+                    return; // this is too spammy when using IMGUI on nvidia card
+                _openGlLogger.Write(logLevel, Marshal.PtrToStringAnsi(message)+"\n"+new StackTrace(1));
+            },
+            null);
+    }
+    #endif*/
     }
     
     public virtual void Closing() {

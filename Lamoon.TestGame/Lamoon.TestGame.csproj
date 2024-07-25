@@ -20,6 +20,6 @@
       <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.21.0" />
     </ItemGroup>
 
-    <Import Project="../Lamoon.Engine/Game.targets"/>
+    <Import Project="../Lamoon.Engine/Game.targets" />
 
 </Project>

@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
-using ImGuiNET;
+// using ImGuiNET;
 using Lamoon.Filesystem;
 
 namespace Lamoon.Engine; 
@@ -21,7 +21,7 @@ public static class FontManager {
         }
     }
     public static unsafe void SetupFonts() {
-        var io = ImGui.GetIO();
+        /*var io = ImGui.GetIO();
         
         var robotoMono = new FontPtrInfo("Fonts/RobotoMono.ttf");
         var mdi = new FontPtrInfo("Fonts/MDI2.ttf");
@@ -45,6 +45,6 @@ public static class FontManager {
         fontcfg->PixelSnapH = 1;
         io.Fonts.AddFontFromMemoryTTF(mdi.Pointer, mdi.Length, 16f, fontcfg,  rangeHandle.AddrOfPinnedObject());
 
-        io.Fonts.Build();
+        io.Fonts.Build();*/
     }
 }

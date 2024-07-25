@@ -5,7 +5,7 @@ using Lamoon.Engine.YamlExtras;
 using Lamoon.Filesystem;
 using Serilog;
 using Serilog.Events;
-using Silk.NET.Windowing.Glfw;
+//using Silk.NET.Windowing.Glfw;
 
 namespace Lamoon.Engine; 
 
@@ -21,17 +21,17 @@ public static class Bootstrapper {
             game = (Game)gameType.GetProperty("Instance").GetValue(null);
         return game;
     }
-    
-    public static void Start(string[] args) {
-        GlfwWindowing.Use();
+
+    public static void Init() {
+        //GlfwWindowing.Use();
         
         const string outputTemplate = "{Timestamp:HH:mm:ss} [{Level}] {Name}: {Message}{Exception}{NewLine}";
         Log.Logger = new LoggerConfiguration()
-        #if DEBUG
+#if DEBUG
             .MinimumLevel.Verbose()
-        #else
+#else
             .MinimumLevel.Information()
-        #endif
+#endif
             .Enrich.FromLogContext()
             .WriteTo.Console(LogEventLevel.Verbose, outputTemplate)
             .WriteTo.File($"logs/lamoon{DateTime.Now:yy.MM.dd-hh.MM.ss}.log", LogEventLevel.Verbose, outputTemplate)
@@ -40,8 +40,14 @@ public static class Bootstrapper {
         
         Definition.TypeConverters.Add(new ObjectRefConverter());
         Definition.TypeConverters.Add(new TextureConverter());
+        Definition.TypeConverters.Add(new MaterialConverter());
+        Definition.TypeConverters.Add(new SpriteConverter());
         Definition.TypeConverters.Add(new OggSoundFileConverter());
         Definition.TypeConverters.Add(new FilesystemPathsResolver());
+    }
+    
+    public static void Start(string[] args) {
+        Init();
         
         var gameId = "default";
         for (int i = 0; i < args.Length; i++) {

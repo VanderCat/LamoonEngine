@@ -20,13 +20,9 @@
       <PackageReference Include="Serilog" Version="3.1.2-dev-02097" />
       <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
       <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00972" />
-      <PackageReference Include="SharpGLTF.Core" Version="1.0.0-alpha0031" />
       <PackageReference Include="Silk.NET.GLFW" Version="2.21.0" />
-      <PackageReference Include="Silk.NET.Input" Version="2.21.0" />
       <PackageReference Include="Silk.NET.Input.Common" Version="2.21.0" />
       <PackageReference Include="Silk.NET.OpenGL" Version="2.21.0" />
-      <PackageReference Include="Silk.NET.OpenGL.Extensions.ImGui" Version="2.21.0" />
-      <PackageReference Include="Silk.NET.Windowing.Glfw" Version="2.21.0" />
     </ItemGroup>
 
     <ItemGroup>

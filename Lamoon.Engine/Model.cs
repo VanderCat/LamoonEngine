@@ -5,12 +5,12 @@ using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using NekoLib.Core;
 using Serilog;
-using SharpGLTF.Schema2;
+//using SharpGLTF.Schema2;
 using Silk.NET.Assimp;
 using Silk.NET.OpenGL;
 using Material = Lamoon.Graphics.Material;
 using Mesh = Silk.NET.Assimp.Mesh;
-using Node = SharpGLTF.Schema2.Node;
+//using Node = SharpGLTF.Schema2.Node;
 using Scene = Silk.NET.Assimp.Scene;
 using Shader = Lamoon.Graphics.Shader;
 using Texture = Lamoon.Graphics.Texture;
@@ -138,7 +138,7 @@ public static class Model {
 
     [Obsolete]
     public unsafe static GameObject FromGltfFileStstem(string path) {
-        ModelRoot model;
+        //ModelRoot model;
         using (var bytes = Files.GetFile(path).GetStream()) {
             //model = ModelRoot.ReadGLB(bytes. );
         }
@@ -154,7 +154,7 @@ public static class Model {
     [Obsolete]
     private static GameObject CreateHirearchy(Node node, GameObject? parent) {
         parent ??= new GameObject();
-        foreach (var child in node.VisualChildren) {
+        /*foreach (var child in node.VisualChildren) {
             var go = CreateHirearchy(child, CreateHirearchy(node, parent));
             go.Transform.Parent = parent.Transform;
             go.Transform.LocalPosition = child.LocalTransform.Translation;
@@ -165,7 +165,7 @@ public static class Model {
                 var meshComponent = go.AddComponent<MeshRenderer>();
                 //mesh.
             }
-        }
+        }*/
 
         return parent;
     }
