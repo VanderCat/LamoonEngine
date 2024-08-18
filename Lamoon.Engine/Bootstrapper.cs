@@ -3,6 +3,7 @@ using Lamoon.Data;
 using Lamoon.Data.YamlSupport;
 using Lamoon.Engine.YamlExtras;
 using Lamoon.Filesystem;
+using NekoLib.Filesystem;
 using Serilog;
 using Serilog.Events;
 using Silk.NET.Windowing.Glfw;

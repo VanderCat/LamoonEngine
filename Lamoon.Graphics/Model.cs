@@ -2,6 +2,7 @@ using System.Numerics;
 using Lamoon.Data;
 using Lamoon.Filesystem;
 using MessagePack;
+using NekoLib.Filesystem;
 using Serilog;
 using Silk.NET.OpenGL;
 

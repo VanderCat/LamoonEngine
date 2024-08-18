@@ -3,6 +3,7 @@ using Lamoon.Engine.Components;
 using Lamoon.Filesystem;
 using Lamoon.Graphics;
 using NekoLib.Core;
+using NekoLib.Filesystem;
 using Silk.NET.OpenGL;
 using Texture = Lamoon.Graphics.Texture;
 
@@ -21,9 +22,9 @@ public class ImguiFileBrowser : Behaviour {
 
     void RefreshCurrentFolder() {
         Files = new();
-        var files = Filesystem.Files.ListDirectory(CurrentPath);
+        var files = NekoLib.Filesystem.Files.ListDirectory(CurrentPath);
         foreach (var filepath in files) {
-            var file = new FileBrowserFileDefinition(Filesystem.Files.GetFile(filepath));
+            var file = new FileBrowserFileDefinition(NekoLib.Filesystem.Files.GetFile(filepath));
             Files.Add(file);
         }
     }
