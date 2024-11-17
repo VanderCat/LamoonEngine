@@ -26,6 +26,8 @@ public struct Transform {
 
     public Transform Apply(Transform transform) => new(Matrix * transform.Matrix);
 
+    public static Transform operator *(Transform transform1, Transform transform2) => transform1.Apply(transform2);
+
     public Transform Inverse() {
         if (Matrix4x4.Invert(Matrix, out var inverted)) {
             return new Transform(inverted);
