@@ -1,4 +1,0 @@
-type: glsl
-
-fragment: Shaders/error.frag
-vertex: Shaders/base.vert
